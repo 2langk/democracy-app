@@ -1,6 +1,6 @@
 import User, { associate as associateUser } from './User';
 
-export * from './sequelize';
+import sequelize from './sequelize';
 
 const db = {
 	User
@@ -9,3 +9,5 @@ const db = {
 export type dbType = typeof db;
 
 associateUser(db);
+
+export default sequelize;

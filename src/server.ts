@@ -1,21 +1,12 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
-import User from './models/User';
-import sequelize from './models/sequelize';
+import sequelize from './models';
 
 dotenv.config({ path: './config.env' });
 
 const app = express();
 
 app.use(express.json());
-
-app.post('/create', async (req, res) => {
-	const newUser = await User.create(req.body);
-
-	res.json({
-		newUser
-	});
-});
 
 sequelize
 	.sync({ force: false })
