@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import User from '../models/User';
+import { User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 
@@ -63,6 +63,7 @@ export const login = catchAsync(
 
 export const protect = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
+		if (!req.cookies.jwt) return next(new AppError('ERROR: Please Login', 400));
 		const token = req.cookies.jwt;
 
 		if (!token) return next(new AppError('ERROR: Please Login', 400));

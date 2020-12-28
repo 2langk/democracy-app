@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
+import { dbType, Application } from './index';
 
 class User extends Model {
 	public id!: string;
@@ -21,6 +21,8 @@ class User extends Model {
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public application?: Application;
 
 	public async comparePassword(password: string): Promise<boolean> {
 		const isValid = await bcrypt.compare(password, this.password);

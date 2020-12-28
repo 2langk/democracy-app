@@ -2,9 +2,12 @@ import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 import { sequelize } from './models';
-import globalErrorHandler from './utils/errorHandler';
+import globalErrorHandler from './utils/globalErrorHandler';
 import AppError from './utils/AppError';
+
+// routes import
 import authRouter from './routes/authRouter';
+import applyRouter from './routes/applyRouter';
 
 dotenv.config({ path: './config.env' });
 
@@ -15,8 +18,9 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/auth', authRouter);
+app.use('/api/apply', applyRouter);
 app.all('*', (req, res, next) => {
-	next(new AppError(`Can't find URL on this server!`, 404));
+	return next(new AppError(`Can't find URL on this server!`, 404));
 });
 
 app.use(globalErrorHandler);

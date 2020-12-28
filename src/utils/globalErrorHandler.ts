@@ -26,7 +26,7 @@ const sendErrorDev = (err: AppError, req: Request, res: Response) =>
 		stack: err.stack
 	});
 
-const ErrorHandler = (
+const globalErrorHandler = (
 	err: Error,
 	req: Request,
 	res: Response,
@@ -45,4 +45,4 @@ const ErrorHandler = (
 	}
 };
 
-export default ErrorHandler;
+export default globalErrorHandler;
