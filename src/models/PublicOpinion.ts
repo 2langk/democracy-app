@@ -44,7 +44,7 @@ PublicOpinion.init(
 	{
 		sequelize,
 		modelName: 'PublicOpinion',
-		tableName: 'publicOpinion',
+		tableName: 'public_Opinion',
 		charset: 'utf8mb4',
 		collate: 'utf8mb4_general_ci'
 	}

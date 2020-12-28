@@ -49,7 +49,7 @@ Application.init(
 	}
 );
 
-export const associate = (db: dbType) => {
+export const associate = (db: dbType): void => {
 	Application.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
 };
 

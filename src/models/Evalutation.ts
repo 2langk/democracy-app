@@ -50,7 +50,7 @@ Evalutation.init(
 	}
 );
 
-export const associate = (db: dbType) => {
+export const associate = (db: dbType): void => {
 	// eslint-disable-next-line prettier/prettier
   Evalutation.belongsTo(db.User, { foreignKey: 'presidentId', as: 'president' })
 };

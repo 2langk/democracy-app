@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
-import sequelize from './models';
+import { sequelize } from './models';
 
 dotenv.config({ path: './config.env' });
 
