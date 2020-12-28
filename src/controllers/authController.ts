@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 import { User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
@@ -31,7 +31,7 @@ export const login = catchAsync(
 
 		if (!user) return next(new AppError('ERROR: Cannot find user.', 400));
 
-		// Not valid.
+		// Password is Not valid.
 		if (!(await user.comparePassword(password)))
 			return next(new AppError('ERROR: Cannot find user.', 400));
 

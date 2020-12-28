@@ -10,8 +10,4 @@ router.use(authController.protect);
 
 router.get('/logout', authController.logout);
 
-// router.get('/protect', authController.protect, (req, res) => {
-// 	console.log(req.user);
-// });
-
 export default router;

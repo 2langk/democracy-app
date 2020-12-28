@@ -31,11 +31,11 @@ export const getAllApplications = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const admin = req.user;
 
-		// if (!admin || admin.role !== 'admin')
-		// 	return next(new AppError('This is only for admin', 400));
+		if (!admin || admin.role !== 'admin')
+			return next(new AppError('This is only for admin', 400));
 
 		const applications = await Application.findAll({
-			where: { school: admin!.school },
+			where: { school: admin.school },
 			attributes: { exclude: ['id'] }
 		});
 
@@ -56,8 +56,8 @@ export const permitEnrollment = catchAsync(
 			userId: string;
 		};
 
-		// if (!admin || admin.role !== 'admin')
-		// 	return next(new AppError('This is only for admin', 400));
+		if (!admin || admin.role !== 'admin')
+			return next(new AppError('This is only for admin', 400));
 
 		const userPromise = User.findByPk(userId);
 		const applicationPromise = Application.findOne({
@@ -69,21 +69,20 @@ export const permitEnrollment = catchAsync(
 			applicationPromise
 		]);
 
-		console.log(user, application);
 		if (
 			!user ||
 			!application ||
-			user.school !== admin!.school ||
+			user.school !== admin.school ||
 			application.isConclude === true
 		)
 			return next(new AppError('ERROR: Permission Denied', 400));
 
 		if (permission) {
 			user.role = 'candidate';
-			await user.save();
 		}
-
 		application.isConclude = true;
+
+		await Promise.all([user.save(), application.save()]);
 
 		res.status(201).json({
 			status: 'success',

@@ -11,7 +11,7 @@ const HOST = process.env.DB_HOST || 'localhost';
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
 	host: HOST,
 	dialect: 'mysql',
-	logging: true
+	logging: false
 });
 
 export default sequelize;
