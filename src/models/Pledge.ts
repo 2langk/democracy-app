@@ -5,6 +5,8 @@ import { dbType } from './index';
 class Pledge extends Model {
 	public id!: string;
 
+	public candidateId!: string;
+
 	public title!: string;
 
 	public content!: string;

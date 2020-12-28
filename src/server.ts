@@ -6,8 +6,7 @@ import globalErrorHandler from './utils/globalErrorHandler';
 import AppError from './utils/AppError';
 
 // routes import
-import authRouter from './routes/authRouter';
-import applyRouter from './routes/applyRouter';
+import { applyRouter, authRouter, pledgeRouter } from './routes';
 
 dotenv.config({ path: './config.env' });
 
@@ -19,6 +18,8 @@ app.use(cookieParser());
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/apply', applyRouter);
+app.use('/api/pledge', pledgeRouter);
+
 app.all('*', (req, res, next) => {
 	return next(new AppError(`Can't find URL on this server!`, 404));
 });

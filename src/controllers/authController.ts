@@ -111,3 +111,19 @@ export const logout = catchAsync(
 		});
 	}
 );
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const restrictTo = (...roles: string[]) => (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { role } = req.user as { role: string };
+
+	if (!roles.includes(role))
+		return next(
+			new AppError(`ERROR: Permission denied. This is only for ${roles}`, 400)
+		);
+
+	next();
+};
