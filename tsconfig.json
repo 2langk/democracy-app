@@ -9,6 +9,7 @@
     "strict": true,         
     "noImplicitAny": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "typeRoots": ["./src/custom", "./node_modules/@types"]
   }
 }

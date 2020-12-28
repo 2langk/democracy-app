@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcryptjs';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
 import { dbType } from './index';
@@ -20,6 +21,11 @@ class User extends Model {
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public async comparePassword(password: string): Promise<boolean> {
+		const isValid = await bcrypt.compare(password, this.password);
+		return isValid;
+	}
 }
 
 User.init(
@@ -49,8 +55,11 @@ User.init(
 		},
 
 		password: {
-			type: DataTypes.STRING(20),
-			allowNull: false
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [3, 20]
+			}
 		},
 
 		role: {
@@ -84,6 +93,13 @@ User.init(
 		collate: 'utf8mb4_general_ci'
 	}
 );
+
+User.beforeCreate(async (user: User) => {
+	if (user.changed('password')) {
+		// eslint-disable-next-line no-param-reassign
+		user.password = await bcrypt.hash(user.password, 12);
+	}
+});
 
 export const associate = (db: dbType): void => {
 	User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });

@@ -1,6 +1,9 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
+import * as cookieParser from 'cookie-parser';
 import { sequelize } from './models';
+import globalErrorHandler from './utils/errorHandler';
+import AppError from './utils/AppError';
 import authRouter from './routes/authRouter';
 
 dotenv.config({ path: './config.env' });
@@ -8,9 +11,17 @@ dotenv.config({ path: './config.env' });
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
+// routes
 app.use('/api/auth', authRouter);
+app.all('*', (req, res, next) => {
+	next(new AppError(`Can't find URL on this server!`, 404));
+});
 
+app.use(globalErrorHandler);
+
+// DB connection
 sequelize
 	.sync({ force: false })
 	.then(() => console.log('DB Connected! :: TABLE SYNC'))

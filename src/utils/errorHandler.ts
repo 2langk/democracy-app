@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from './AppError';
 
-const sendErrorProd = (err, req: Request, res: Response) => {
+const sendErrorProd = (err: AppError, req: Request, res: Response) => {
 	if (err.isOperational) {
 		return res.status(err.statusCode).json({
 			status: err.status,
