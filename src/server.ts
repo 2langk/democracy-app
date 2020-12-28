@@ -1,12 +1,15 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
 import { sequelize } from './models';
+import authRouter from './routes/authRouter';
 
 dotenv.config({ path: './config.env' });
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/api/auth', authRouter);
 
 sequelize
 	.sync({ force: false })
