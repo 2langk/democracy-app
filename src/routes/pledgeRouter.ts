@@ -9,7 +9,11 @@ router.use(protect);
 router
 	.route('/')
 	.get(pledgeController.getAllPledges)
-	.post(restrictTo('candidate'), pledgeController.createPledge);
+	.post(
+		restrictTo('candidate'),
+		pledgeController.uploadImage,
+		pledgeController.createPledge
+	);
 
 router
 	.route('/admin')
