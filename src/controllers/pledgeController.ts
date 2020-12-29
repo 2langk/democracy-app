@@ -1,11 +1,42 @@
 import { Request, Response, NextFunction } from 'express';
+import * as multer from 'multer';
 import { Pledge, User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 
+const storage = multer.diskStorage({
+	destination(req, file, cb) {
+		cb(null, 'uploads');
+	},
+	filename(req, file, cb) {
+		cb(null, `${req.user!.name}-${Date.now()}.${file.mimetype.split('/')[1]}`);
+	}
+});
+
+const fileFilter = (
+	req: Request,
+	file: Express.Multer.File,
+	cb: multer.FileFilterCallback
+) => {
+	if (file.mimetype.startsWith('image')) {
+		cb(null, true);
+	} else {
+		cb(new AppError('Please upload only images.', 400));
+	}
+};
+
+export const uploadImage = multer({ storage, fileFilter }).array('images');
+
 export const createPledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { title, content } = req.body;
+		const files = req.files as Array<Express.Multer.File>;
+
+		let image = '';
+
+		files.forEach((file) => {
+			image += `${file.filename},`;
+		});
 
 		if (!title || !content)
 			return next(new AppError('ERROR: Cannot find title or content', 400));
@@ -13,6 +44,7 @@ export const createPledge = catchAsync(
 		const newPledge = await Pledge.create({
 			title,
 			content,
+			image,
 			school: req.user!.school,
 			candidateId: req.user!.id
 		});
