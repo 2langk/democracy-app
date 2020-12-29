@@ -28,6 +28,7 @@
         "tsx": "never"
       }
    ],
-   "consistent-return": "off"
+   "consistent-return": "off",
+   "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

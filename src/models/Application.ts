@@ -3,7 +3,7 @@ import sequelize from './sequelize';
 import { dbType, User } from './index';
 
 class Application extends Model {
-	public id!: number;
+	public id?: number;
 
 	public userId!: string;
 
