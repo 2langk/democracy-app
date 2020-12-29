@@ -26,10 +26,29 @@ export const createPledge = catchAsync(
 	}
 );
 
-export const createPledge2 = catchAsync(
+export const getAllPledges = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
+		const pledges = await Pledge.findAll({
+			where: { school: req.user!.school }
+		});
+
 		res.status(200).json({
-			status: 'success'
+			status: 'success',
+			data: {
+				pledges
+			}
+		});
+	}
+);
+
+export const getOnePledge = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const pledge = await Pledge.findOne({
+			where: { school: req.user!.school, candidateId: req.params.id }
+		});
+		res.status(200).json({
+			status: 'success',
+			pledge
 		});
 	}
 );

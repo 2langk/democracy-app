@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
@@ -112,8 +112,7 @@ export const logout = catchAsync(
 	}
 );
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const restrictTo = (...roles: string[]) => (
+export const restrictTo = (...roles: string[]): RequestHandler => (
 	req: Request,
 	res: Response,
 	next: NextFunction

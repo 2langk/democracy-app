@@ -31,6 +31,12 @@ Pledge.init(
 			defaultValue: DataTypes.UUIDV4
 		},
 
+		candidateId: {
+			type: DataTypes.UUID,
+			allowNull: false,
+			unique: true
+		},
+
 		title: {
 			type: DataTypes.STRING,
 			allowNull: false,

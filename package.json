@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./build/server.js",
     "dev": "nodemon src/server.ts --exec ts-node",
     "build": "tsc -p .",
-    "prod": "pm2 ./build/server.js"
+    "start": "pm2 ./build/server.js"
   },
   "keywords": [],
   "author": "",
