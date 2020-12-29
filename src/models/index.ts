@@ -3,6 +3,8 @@ import Application, { associate as associateApplication } from './Application';
 import Evalutation, { associate as associateEvalutation } from './Evalutation';
 import Pledge, { associate as associatePledge } from './Pledge';
 import PublicOpinion, { associate as associateOpinion } from './PublicOpinion';
+import Question, { associate as associateQuestion } from './Question';
+import Answer, { associate as associateAnswer } from './Answer';
 
 import sequelize from './sequelize';
 
@@ -11,7 +13,9 @@ const db = {
 	Application,
 	Evalutation,
 	Pledge,
-	PublicOpinion
+	PublicOpinion,
+	Question,
+	Answer
 };
 
 export type dbType = typeof db;
@@ -21,6 +25,16 @@ associateApplication(db);
 associateEvalutation(db);
 associatePledge(db);
 associateOpinion(db);
+associateQuestion(db);
+associateAnswer(db);
 
-export { sequelize };
-export { User, Application, Evalutation, Pledge, PublicOpinion };
+export {
+	sequelize,
+	User,
+	Application,
+	Evalutation,
+	Pledge,
+	PublicOpinion,
+	Question,
+	Answer
+};

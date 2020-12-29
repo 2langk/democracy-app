@@ -117,6 +117,8 @@ export const associate = (db: dbType): void => {
 	User.hasMany(db.Evalutation, { foreignKey: 'presidentId', as: 'evaluation' });
 	// eslint-disable-next-line prettier/prettier
 	User.hasMany(db.PublicOpinion, { foreignKey: 'candidateId', as: 'publicOpinion' });
+	User.hasMany(db.Question, { foreignKey: 'userId', as: 'question' });
+	User.hasMany(db.Answer, { foreignKey: 'userId', as: 'answer' });
 };
 
 export default User;
