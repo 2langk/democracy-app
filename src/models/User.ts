@@ -10,7 +10,7 @@ class User extends Model {
 
 	public email!: string;
 
-	public password!: string;
+	public password?: string;
 
 	public role!: string;
 
@@ -25,7 +25,7 @@ class User extends Model {
 	public application?: Application;
 
 	public async comparePassword(password: string): Promise<boolean> {
-		const isValid = await bcrypt.compare(password, this.password);
+		const isValid = await bcrypt.compare(password, this.password!);
 		return isValid;
 	}
 }
@@ -99,7 +99,7 @@ User.init(
 User.beforeCreate(async (user: User) => {
 	if (user.changed('password')) {
 		// eslint-disable-next-line no-param-reassign
-		user.password = await bcrypt.hash(user.password, 12);
+		user.password = await bcrypt.hash(user.password!, 12);
 	}
 });
 

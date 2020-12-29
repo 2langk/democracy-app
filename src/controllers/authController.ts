@@ -12,7 +12,7 @@ export const register = catchAsync(
 
 		if (!newUser) return next(new AppError('ERROR: Cannot create user', 400));
 
-		newUser.password = 'undefined';
+		delete newUser.password;
 
 		res.status(201).json({
 			status: 'success',
@@ -50,7 +50,7 @@ export const login = catchAsync(
 
 		res.cookie('jwt', token, cookieOptions);
 
-		user.password = 'undefined';
+		delete user.password;
 
 		res.status(200).json({
 			status: 'success',
@@ -80,7 +80,7 @@ export const protect = catchAsync(
 
 		req.user = currentUser.toJSON() as User;
 
-		req.user.password = 'undefined';
+		delete req.user.password;
 
 		next();
 	}
@@ -104,7 +104,7 @@ export const logout = catchAsync(
 
 		res.cookie('jwt', token, cookieOptions);
 
-		user.password = 'undefined';
+		delete user.password;
 
 		res.status(200).json({
 			status: 'success'

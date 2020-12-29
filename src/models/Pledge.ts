@@ -3,7 +3,7 @@ import sequelize from './sequelize';
 import { dbType } from './index';
 
 class Pledge extends Model {
-	public id!: string;
+	public id?: number;
 
 	public candidateId!: string;
 
@@ -15,6 +15,8 @@ class Pledge extends Model {
 
 	public image?: string;
 
+	public canVote!: boolean;
+
 	public voteCount!: number;
 
 	public readonly createdAt!: Date;
@@ -24,13 +26,6 @@ class Pledge extends Model {
 
 Pledge.init(
 	{
-		id: {
-			allowNull: false,
-			primaryKey: true,
-			type: DataTypes.UUID,
-			defaultValue: DataTypes.UUIDV4
-		},
-
 		candidateId: {
 			type: DataTypes.UUID,
 			allowNull: false,
@@ -61,6 +56,12 @@ Pledge.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			defaultValue: 'no image'
+		},
+
+		canVote: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		},
 
 		voteCount: {
