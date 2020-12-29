@@ -46,6 +46,7 @@ export const getOnePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const pledge = await Pledge.findOne({
 			where: { school: req.user!.school, candidateId: req.params.id },
+			include: { model: User, as: 'candidate' },
 			attributes: { exclude: ['id', 'voteCount'] }
 		});
 
@@ -104,9 +105,11 @@ export const updatePledge = catchAsync(
 		if (!pledge || pledge!.school !== req.user.school)
 			return next(new AppError('ERROR: Permission denied', 400));
 
-		pledge.title = req.body?.title || pledge.title;
-		pledge.content = req.body?.content || pledge.content;
-		pledge.image = req.body?.image || pledge.image;
+		if (req.user.id === pledge.candidateId) {
+			pledge.title = req.body?.title || pledge.title;
+			pledge.content = req.body?.content || pledge.content;
+			pledge.image = req.body?.image || pledge.image;
+		}
 
 		if (req.user.role === 'admin')
 			pledge.canVote = req.body?.canVote || pledge.canVote;
@@ -129,6 +132,46 @@ export const deletePledge = catchAsync(
 		res.status(200).json({
 			status: 'success',
 			data: {}
+		});
+	}
+);
+
+export const getResult = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const pledges = await Pledge.findAll({
+			where: { school: req.user!.school },
+			include: {
+				model: User,
+				as: 'candidate',
+				attributes: { exclude: ['password'] }
+			}
+		});
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				pledges
+			}
+		});
+	}
+);
+
+export const electPresident = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const { candidateId } = req.body;
+
+		const president = await User.findByPk(candidateId);
+
+		if (president!.school !== req.user!.school)
+			return next(new AppError('ERROR: Permission denied', 400));
+
+		president!.role = 'president';
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				president
+			}
 		});
 	}
 );

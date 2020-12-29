@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
+import { dbType, User } from './index';
 
 class Pledge extends Model {
 	public id?: number;
@@ -22,6 +22,8 @@ class Pledge extends Model {
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public candidate?: User;
 }
 
 Pledge.init(

@@ -27,7 +27,9 @@ export const login = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { email, password } = req.body;
 
-		const user = await User.findOne({ where: { email } });
+		const user = await User.scope('withPassword').findOne({
+			where: { email }
+		});
 
 		if (!user) return next(new AppError('ERROR: Cannot find user.', 400));
 
@@ -48,9 +50,9 @@ export const login = catchAsync(
 			secure: process.env.NODE_ENV === 'production'
 		};
 
-		res.cookie('jwt', token, cookieOptions);
+		user.password = undefined;
 
-		delete user.password;
+		res.cookie('jwt', token, cookieOptions);
 
 		res.status(200).json({
 			status: 'success',
@@ -80,8 +82,6 @@ export const protect = catchAsync(
 
 		req.user = currentUser.toJSON() as User;
 
-		delete req.user.password;
-
 		next();
 	}
 );
@@ -103,8 +103,6 @@ export const logout = catchAsync(
 		};
 
 		res.cookie('jwt', token, cookieOptions);
-
-		delete user.password;
 
 		res.status(200).json({
 			status: 'success'

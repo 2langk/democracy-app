@@ -12,6 +12,11 @@ router
 	.post(restrictTo('candidate'), pledgeController.createPledge);
 
 router
+	.route('/admin')
+	.get(restrictTo('admin'), pledgeController.getResult)
+	.post(restrictTo('admin'), pledgeController.electPresident);
+
+router
 	.route('/:id')
 	.get(pledgeController.getOnePledge)
 	.post(pledgeController.voteToPledge) // for every user(same school)
