@@ -1,6 +1,7 @@
+import * as bcrypt from 'bcryptjs';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
+import { dbType, Application } from './index';
 
 class User extends Model {
 	public id!: string;
@@ -9,7 +10,7 @@ class User extends Model {
 
 	public email!: string;
 
-	public password!: string;
+	public password?: string;
 
 	public role!: string;
 
@@ -20,6 +21,13 @@ class User extends Model {
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public application?: Application;
+
+	public async comparePassword(password: string): Promise<boolean> {
+		const isValid = await bcrypt.compare(password, this.password!);
+		return isValid;
+	}
 }
 
 User.init(
@@ -49,8 +57,11 @@ User.init(
 		},
 
 		password: {
-			type: DataTypes.STRING(20),
-			allowNull: false
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [3, 20]
+			}
 		},
 
 		role: {
@@ -81,9 +92,24 @@ User.init(
 		modelName: 'User',
 		tableName: 'user',
 		charset: 'utf8mb4',
-		collate: 'utf8mb4_general_ci'
+		collate: 'utf8mb4_general_ci',
+		defaultScope: {
+			attributes: { exclude: ['password'] }
+		},
+		scopes: {
+			withPassword: {
+				attributes: { exclude: [] }
+			}
+		}
 	}
 );
+
+User.beforeCreate(async (user: User) => {
+	if (user.changed('password')) {
+		// eslint-disable-next-line no-param-reassign
+		user.password = await bcrypt.hash(user.password!, 12);
+	}
+});
 
 export const associate = (db: dbType): void => {
 	User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });

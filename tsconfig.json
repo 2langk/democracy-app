@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",                          
-    "module": "commonjs",                    
+    "module": "CommonJS",                    
     "lib": ["ES2015", "ES2016", "ES2017", "ES2018"],                     
     "allowJs": true,
     "outDir": "./build",                          
@@ -9,6 +9,7 @@
     "strict": true,         
     "noImplicitAny": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "typeRoots": ["./src/custom", "./node_modules/@types"]
   }
 }

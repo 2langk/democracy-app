@@ -3,7 +3,9 @@ import sequelize from './sequelize';
 import { dbType } from './index';
 
 class Evalutation extends Model {
-	public id!: number;
+	public id?: number;
+
+	public presidentId!: string;
 
 	public userId!: string;
 

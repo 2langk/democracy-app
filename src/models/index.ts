@@ -23,4 +23,4 @@ associatePledge(db);
 associateOpinion(db);
 
 export { sequelize };
-export default db;
+export { User, Application, Evalutation, Pledge, PublicOpinion };

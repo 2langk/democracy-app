@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
+import { dbType, User } from './index';
 
 class Application extends Model {
-	public id!: number;
+	public id?: number;
 
 	public userId!: string;
 
@@ -11,9 +11,13 @@ class Application extends Model {
 
 	public title!: string;
 
+	public isConclude!: boolean;
+
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public user?: User;
 }
 
 Application.init(
@@ -38,6 +42,12 @@ Application.init(
 			validate: {
 				len: [1, 10]
 			}
+		},
+
+		isConclude: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		}
 	},
 	{

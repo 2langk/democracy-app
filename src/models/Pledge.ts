@@ -1,9 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
+import { dbType, User } from './index';
 
 class Pledge extends Model {
-	public id!: string;
+	public id?: number;
+
+	public candidateId!: string;
 
 	public title!: string;
 
@@ -13,20 +15,23 @@ class Pledge extends Model {
 
 	public image?: string;
 
+	public canVote!: boolean;
+
 	public voteCount!: number;
 
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
+
+	public candidate?: User;
 }
 
 Pledge.init(
 	{
-		id: {
-			allowNull: false,
-			primaryKey: true,
+		candidateId: {
 			type: DataTypes.UUID,
-			defaultValue: DataTypes.UUIDV4
+			allowNull: false,
+			unique: true
 		},
 
 		title: {
@@ -53,6 +58,12 @@ Pledge.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			defaultValue: 'no image'
+		},
+
+		canVote: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
 		},
 
 		voteCount: {

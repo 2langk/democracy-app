@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from './AppError';
 
-const sendErrorProd = (err, req: Request, res: Response) => {
+const sendErrorProd = (err: AppError, req: Request, res: Response) => {
 	if (err.isOperational) {
 		return res.status(err.statusCode).json({
 			status: err.status,
@@ -26,7 +26,7 @@ const sendErrorDev = (err: AppError, req: Request, res: Response) =>
 		stack: err.stack
 	});
 
-const ErrorHandler = (
+const globalErrorHandler = (
 	err: Error,
 	req: Request,
 	res: Response,
@@ -45,4 +45,4 @@ const ErrorHandler = (
 	}
 };
 
-export default ErrorHandler;
+export default globalErrorHandler;

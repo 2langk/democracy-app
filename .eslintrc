@@ -27,6 +27,8 @@
         "ts": "never",
         "tsx": "never"
       }
-   ]
+   ],
+   "consistent-return": "off",
+   "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
