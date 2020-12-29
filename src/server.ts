@@ -5,8 +5,14 @@ import { sequelize } from './models';
 import globalErrorHandler from './utils/globalErrorHandler';
 import AppError from './utils/AppError';
 
-// routes import
-import { applyRouter, authRouter, pledgeRouter, evalRouter } from './routes';
+// import Routers
+import {
+	applyRouter,
+	authRouter,
+	pledgeRouter,
+	evalRouter,
+	questionRouter
+} from './routes';
 
 dotenv.config({ path: './config.env' });
 
@@ -15,11 +21,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('uploads'));
+
 // routes
 app.use('/api/auth', authRouter);
 app.use('/api/apply', applyRouter);
 app.use('/api/pledge', pledgeRouter);
 app.use('/api/evaluation', evalRouter);
+app.use('/api/question', questionRouter);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`Can't find URL on this server!`, 404));

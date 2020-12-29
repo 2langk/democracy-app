@@ -33,10 +33,11 @@ export const createPledge = catchAsync(
 		const files = req.files as Array<Express.Multer.File>;
 
 		let image = '';
-
-		files.forEach((file) => {
-			image += `${file.filename},`;
-		});
+		if (files) {
+			files.forEach((file) => {
+				image += `${file.filename},`;
+			});
+		}
 
 		if (!title || !content)
 			return next(new AppError('ERROR: Cannot find title or content', 400));
@@ -128,19 +129,30 @@ export const voteToPledge = catchAsync(
 export const updatePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		if (!req.user) return next(new AppError('ERROR: Permission denied', 400));
+		const files = req.files as Array<Express.Multer.File>;
+		let image = '';
+
+		if (files) {
+			files.forEach((file) => {
+				image += `${file.filename},`;
+			});
+		}
 
 		const pledge = await Pledge.findOne({
 			where: { candidateId: req.params.id },
 			attributes: { exclude: ['voteCount'] }
 		});
 
-		if (!pledge || pledge!.school !== req.user.school)
+		if (
+			!pledge ||
+			(pledge.candidateId !== req.user.id && req.user.role !== 'admin')
+		)
 			return next(new AppError('ERROR: Permission denied', 400));
 
 		if (req.user.id === pledge.candidateId) {
 			pledge.title = req.body?.title || pledge.title;
 			pledge.content = req.body?.content || pledge.content;
-			pledge.image = req.body?.image || pledge.image;
+			pledge.image = image || pledge.image;
 		}
 
 		if (req.user.role === 'admin')

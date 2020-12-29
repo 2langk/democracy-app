@@ -24,7 +24,11 @@ router
 	.route('/:id')
 	.get(pledgeController.getOnePledge)
 	.post(pledgeController.voteToPledge) // for every user(same school)
-	.patch(restrictTo('candidate', 'admin'), pledgeController.updatePledge)
+	.patch(
+		restrictTo('candidate', 'admin'),
+		pledgeController.uploadImage,
+		pledgeController.updatePledge
+	)
 	.delete(restrictTo('candidate', 'admin'), pledgeController.deletePledge);
 
 export default router;
