@@ -101,15 +101,16 @@ export const updateQuestion = catchAsync(
 
 export const deleteQuestion = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const question = await Question.findByPk(req.params.id, {
-			include: { model: User, as: 'user' }
-		});
+		const question = await Question.findByPk(req.params.id);
+
+		if (req.user!.id !== question?.userId)
+			return next(new AppError('Error: permission Denied', 400));
+
+		await question.destroy();
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				question
-			}
+			data: {}
 		});
 	}
 );
@@ -118,7 +119,8 @@ export const createAnswer = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { content } = req.body;
 
-		if (!content) next(new AppError('Error: please pass your answer', 400));
+		if (!content)
+			return next(new AppError('Error: please pass your answer', 400));
 
 		const newAnswer = await Answer.create({
 			content,
@@ -131,6 +133,46 @@ export const createAnswer = catchAsync(
 			data: {
 				newAnswer
 			}
+		});
+	}
+);
+
+export const updateAnswer = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const answer = await Answer.findOne({
+			where: { questionId: req.params.questionId, id: req.params.id }
+		});
+
+		if (!answer || answer.userId !== req.user!.id)
+			return next(new AppError('Error: Permission Denied', 400));
+
+		answer.content = req.body.content || answer.content;
+
+		await answer.save();
+
+		res.status(201).json({
+			status: 'success',
+			data: {
+				answer
+			}
+		});
+	}
+);
+
+export const deleteAnswer = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const answer = await Answer.findOne({
+			where: { questionId: req.params.questionId, id: req.params.id }
+		});
+
+		if (!answer || answer.userId !== req.user!.id)
+			return next(new AppError('Error: Permission Denied', 400));
+
+		await answer.destroy();
+
+		res.status(201).json({
+			status: 'success',
+			data: {}
 		});
 	}
 );

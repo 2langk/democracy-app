@@ -13,6 +13,9 @@ router
 
 // only for admin
 router.use(restrictTo('admin'));
-router.route('/enrollment').post(applyController.permitEnrollment);
+router
+	.route('/enrollment')
+	.post(applyController.permitApplication)
+	.delete(applyController.deleteApplication);
 
 export default router;

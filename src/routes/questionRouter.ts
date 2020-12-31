@@ -18,4 +18,8 @@ router
 	.patch(questionController.updateQuestion)
 	.delete(questionController.deleteQuestion);
 
+router
+	.route('/:questionId/answer/:id')
+	.patch(questionController.updateAnswer)
+	.delete(questionController.deleteAnswer);
 export default router;

@@ -124,3 +124,33 @@ export const restrictTo = (...roles: string[]): RequestHandler => (
 
 	next();
 };
+
+export const login2 = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const user = await User.scope('withPassword').findOne();
+
+		if (!user) return next(new AppError('ERROR: Cannot find user.', 400));
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, {
+			expiresIn: process.env.JWT_EXPIRES_IN
+		});
+
+		const expire =
+			((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
+
+		const cookieOptions = {
+			expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production'
+		};
+
+		user.password = undefined;
+
+		res.cookie('jwt', token, cookieOptions);
+
+		res.status(200).json({
+			status: 'success',
+			data: {}
+		});
+	}
+);

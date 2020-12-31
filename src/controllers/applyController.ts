@@ -48,7 +48,7 @@ export const getAllApplications = catchAsync(
 	}
 );
 
-export const permitEnrollment = catchAsync(
+export const permitApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const admin = req.user;
 		const { permission, userId } = req.body as {
@@ -89,6 +89,38 @@ export const permitEnrollment = catchAsync(
 			data: {
 				user
 			}
+		});
+	}
+);
+
+export const deleteApplication = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const admin = req.user;
+		const { userId } = req.body as {
+			userId: string;
+		};
+
+		if (!admin || admin.role !== 'admin')
+			return next(new AppError('This is only for admin', 400));
+
+		const userPromise = User.findByPk(userId);
+		const applicationPromise = Application.findOne({
+			where: { userId }
+		});
+
+		const [user, application] = await Promise.all([
+			userPromise,
+			applicationPromise
+		]);
+
+		if (!user || !application || user.school !== admin.school)
+			return next(new AppError('ERROR: Permission Denied', 400));
+
+		await application.destroy();
+
+		res.status(201).json({
+			status: 'success',
+			data: {}
 		});
 	}
 );
