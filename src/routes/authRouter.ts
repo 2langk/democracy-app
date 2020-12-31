@@ -5,6 +5,7 @@ const router = Router();
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.get('/login2', authController.login2);
 
 router.use(authController.protect);
 

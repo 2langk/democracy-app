@@ -173,6 +173,21 @@ export const updatePledge = catchAsync(
 
 export const deletePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
+		if (!req.user) return next(new AppError('ERROR: Permission denied', 400));
+
+		const pledge = await Pledge.findOne({
+			where: { candidateId: req.params.id },
+			attributes: { exclude: ['voteCount'] }
+		});
+
+		if (
+			!pledge ||
+			(pledge.candidateId !== req.user.id && req.user.role !== 'admin')
+		)
+			return next(new AppError('ERROR: Permission denied', 400));
+
+		await pledge.destroy();
+
 		res.status(200).json({
 			status: 'success',
 			data: {}
