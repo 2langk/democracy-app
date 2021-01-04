@@ -43,8 +43,8 @@ exports.login = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 
     const expire = process.env.JWT_COOKIE_EXPIRES_IN || 1;
     const cookieOptions = {
         expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production'
+        httpOnly: true
+        // secure: process.env.NODE_ENV === 'production'
     };
     user.password = undefined;
     res.cookie('jwt', token, cookieOptions);
@@ -80,8 +80,8 @@ exports.logout = catchAsync_1.default((req, res, next) => __awaiter(void 0, void
     });
     const cookieOptions = {
         expires: new Date(Date.now() + 1 * 1000),
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production'
+        httpOnly: true
+        // secure: process.env.NODE_ENV === 'production'
     };
     res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
@@ -105,8 +105,8 @@ exports.login2 = catchAsync_1.default((req, res, next) => __awaiter(void 0, void
     const expire = process.env.JWT_COOKIE_EXPIRES_IN || 1;
     const cookieOptions = {
         expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production'
+        httpOnly: true
+        // secure: process.env.NODE_ENV === 'production'
     };
     user.password = undefined;
     res.cookie('jwt', token, cookieOptions);

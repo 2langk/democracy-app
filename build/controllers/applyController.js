@@ -48,12 +48,12 @@ exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(
 }));
 exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const admin = req.user;
-    const { permission, userId } = req.body;
+    const { permission } = req.body;
     if (!admin || admin.role !== 'admin')
         return next(new AppError_1.default('This is only for admin', 400));
-    const userPromise = models_1.User.findByPk(userId);
+    const userPromise = models_1.User.findByPk(req.params.id);
     const applicationPromise = models_1.Application.findOne({
-        where: { userId }
+        where: { userId: req.params.id }
     });
     const [user, application] = yield Promise.all([
         userPromise,
@@ -64,7 +64,7 @@ exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(v
         user.school !== admin.school ||
         application.isConclude === true)
         return next(new AppError_1.default('ERROR: Permission Denied', 400));
-    if (permission) {
+    if (permission === true) {
         user.role = 'candidate';
     }
     application.isConclude = true;
@@ -78,12 +78,11 @@ exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(v
 }));
 exports.deleteApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const admin = req.user;
-    const { userId } = req.body;
     if (!admin || admin.role !== 'admin')
         return next(new AppError_1.default('This is only for admin', 400));
-    const userPromise = models_1.User.findByPk(userId);
+    const userPromise = models_1.User.findByPk(req.params.id);
     const applicationPromise = models_1.Application.findOne({
-        where: { userId }
+        where: { userId: req.params.id }
     });
     const [user, application] = yield Promise.all([
         userPromise,

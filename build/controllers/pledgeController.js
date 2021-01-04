@@ -20,7 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.electPresident = exports.getResult = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = exports.uploadImage = void 0;
+exports.electPresident = exports.getResult = exports.openOrCloseVote = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = exports.uploadImage = void 0;
 const multer = require("multer");
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
@@ -115,7 +115,7 @@ exports.voteToPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     });
 }));
 exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b;
     if (!req.user)
         return next(new AppError_1.default('ERROR: Permission denied', 400));
     const files = req.files;
@@ -129,18 +129,13 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         where: { candidateId: req.params.id },
         attributes: { exclude: ['voteCount'] }
     });
-    if (!pledge ||
-        (pledge.candidateId !== req.user.id && req.user.role !== 'admin'))
+    if (!pledge || pledge.candidateId !== req.user.id)
         return next(new AppError_1.default('ERROR: Permission denied', 400));
-    if (req.user.id === pledge.candidateId) {
-        pledge.title = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.title) || pledge.title;
-        pledge.content = ((_b = req.body) === null || _b === void 0 ? void 0 : _b.content) || pledge.content;
-        pledge.image = image || pledge.image;
-    }
-    if (req.user.role === 'admin')
-        pledge.canVote = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.canVote) || pledge.canVote;
+    pledge.title = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.title) || pledge.title;
+    pledge.content = ((_b = req.body) === null || _b === void 0 ? void 0 : _b.content) || pledge.content;
+    pledge.image = image || pledge.image;
     yield pledge.save();
-    const _d = pledge.toJSON(), { id } = _d, update = __rest(_d, ["id"]);
+    const _c = pledge.toJSON(), { id } = _c, update = __rest(_c, ["id"]);
     res.status(200).json({
         status: 'success',
         data: {
@@ -162,6 +157,26 @@ exports.deletePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     res.status(200).json({
         status: 'success',
         data: {}
+    });
+}));
+exports.openOrCloseVote = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.user.role !== 'admin')
+        return next(new AppError_1.default('ERROR: Permission denied', 400));
+    let pledges = yield models_1.Pledge.findAll({
+        where: { school: req.user.school },
+        attributes: { exclude: ['voteCount'] }
+    });
+    const pledgesPromise = pledges.map((pledge) => {
+        // eslint-disable-next-line no-param-reassign
+        pledge.canVote = !pledge.canVote;
+        return pledge.save();
+    });
+    pledges = yield Promise.all(pledgesPromise);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            pledges
+        }
     });
 }));
 exports.getResult = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

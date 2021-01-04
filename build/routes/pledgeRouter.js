@@ -12,11 +12,12 @@ router
 router
     .route('/admin')
     .get(authController_1.restrictTo('admin'), pledgeController.getResult)
-    .post(authController_1.restrictTo('admin'), pledgeController.electPresident);
+    .post(authController_1.restrictTo('admin'), pledgeController.electPresident)
+    .put(authController_1.restrictTo('admin'), pledgeController.openOrCloseVote);
 router
     .route('/:id')
     .get(pledgeController.getOnePledge)
-    .post(pledgeController.voteToPledge) // for every user(same school)
-    .patch(authController_1.restrictTo('candidate', 'admin'), pledgeController.uploadImage, pledgeController.updatePledge)
+    .put(pledgeController.voteToPledge) // for every user(same school)
+    .patch(authController_1.restrictTo('candidate'), pledgeController.uploadImage, pledgeController.updatePledge)
     .delete(authController_1.restrictTo('candidate', 'admin'), pledgeController.deletePledge);
 exports.default = router;
