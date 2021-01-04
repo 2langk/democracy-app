@@ -57,7 +57,7 @@ Pledge.init(
 		image: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			defaultValue: 'no image'
+			defaultValue: 'no'
 		},
 
 		canVote: {

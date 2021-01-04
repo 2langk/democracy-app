@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { protect, restrictTo } from '../controllers/authController';
+import { uploadPledgeImages } from '../utils/multerConfig';
 import * as pledgeController from '../controllers/pledgeController';
 
 const router = Router();
@@ -11,7 +12,7 @@ router
 	.get(pledgeController.getAllPledges)
 	.post(
 		restrictTo('candidate'),
-		pledgeController.uploadImage,
+		uploadPledgeImages.array('images'),
 		pledgeController.createPledge
 	);
 
@@ -27,7 +28,7 @@ router
 	.put(pledgeController.voteToPledge) // for every user(same school)
 	.patch(
 		restrictTo('candidate'),
-		pledgeController.uploadImage,
+		uploadPledgeImages.array('images'),
 		pledgeController.updatePledge
 	)
 	.delete(restrictTo('candidate', 'admin'), pledgeController.deletePledge);

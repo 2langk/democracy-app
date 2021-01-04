@@ -1,42 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
-import * as multer from 'multer';
 import { Pledge, User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
-import { pledgeRouter } from '../routes';
-
-const storage = multer.diskStorage({
-	destination(req, file, cb) {
-		cb(null, 'uploads');
-	},
-	filename(req, file, cb) {
-		cb(null, `${req.user!.name}-${Date.now()}.${file.mimetype.split('/')[1]}`);
-	}
-});
-
-const fileFilter = (
-	req: Request,
-	file: Express.Multer.File,
-	cb: multer.FileFilterCallback
-) => {
-	if (file.mimetype.startsWith('image')) {
-		cb(null, true);
-	} else {
-		cb(new AppError('Please upload only images.', 400));
-	}
-};
-
-export const uploadImage = multer({ storage, fileFilter }).array('images');
 
 export const createPledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { title, content } = req.body;
-		const files = req.files as Array<Express.Multer.File>;
+
+		const files = req.files as Array<any>;
 
 		let image = '';
 		if (files) {
 			files.forEach((file) => {
-				image += `${file.filename},`;
+				image += `${file.key},`;
 			});
 		}
 
@@ -130,12 +106,12 @@ export const voteToPledge = catchAsync(
 export const updatePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		if (!req.user) return next(new AppError('ERROR: Permission denied', 400));
-		const files = req.files as Array<Express.Multer.File>;
+		const files = req.files as Array<any>;
 		let image = '';
 
 		if (files) {
 			files.forEach((file) => {
-				image += `${file.filename},`;
+				image += `${file.key},`;
 			});
 		}
 
