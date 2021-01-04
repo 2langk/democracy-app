@@ -31,7 +31,7 @@ Pledge.init({
     image: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'no image'
+        defaultValue: 'no'
     },
     canVote: {
         type: sequelize_1.DataTypes.BOOLEAN,

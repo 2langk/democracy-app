@@ -20,35 +20,17 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.electPresident = exports.getResult = exports.openOrCloseVote = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = exports.uploadImage = void 0;
-const multer = require("multer");
+exports.electPresident = exports.getResult = exports.openOrCloseVote = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = void 0;
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
 const AppError_1 = require("../utils/AppError");
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, 'uploads');
-    },
-    filename(req, file, cb) {
-        cb(null, `${req.user.name}-${Date.now()}.${file.mimetype.split('/')[1]}`);
-    }
-});
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    }
-    else {
-        cb(new AppError_1.default('Please upload only images.', 400));
-    }
-};
-exports.uploadImage = multer({ storage, fileFilter }).array('images');
 exports.createPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, content } = req.body;
     const files = req.files;
     let image = '';
     if (files) {
         files.forEach((file) => {
-            image += `${file.filename},`;
+            image += `${file.key},`;
         });
     }
     if (!title || !content)
@@ -122,7 +104,7 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     let image = '';
     if (files) {
         files.forEach((file) => {
-            image += `${file.filename},`;
+            image += `${file.key},`;
         });
     }
     const pledge = yield models_1.Pledge.findOne({

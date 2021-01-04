@@ -22,7 +22,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i
     - run: aws s3 cp s3://2langk-s3-bucket/democracy-app/config.env ./
-    - run: npm run build --if-present
+    # - run: npm run build --if-present => ec2 heap overflow...
     - run: npm run start
     - run: sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
     - run: pm2 save
