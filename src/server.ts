@@ -45,7 +45,7 @@ app.use(xss());
 app.use(compression());
 
 // routes
-app.get('/', (req, res) => console.log('Hello World!'));
+app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/auth', authRouter);
 app.use('/api/apply', applyRouter);
 app.use('/api/pledge', pledgeRouter);

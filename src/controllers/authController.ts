@@ -41,23 +41,24 @@ export const login = catchAsync(
 			expiresIn: process.env.JWT_EXPIRES_IN
 		});
 
-		const expire =
-			((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
+		// const expire =
+		// 	((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
 
-		const cookieOptions = {
-			expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-			httpOnly: true
-			// secure: process.env.NODE_ENV === 'production'
-		};
+		// const cookieOptions = {
+		// 	expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+		// 	httpOnly: true
+		// 	// secure: process.env.NODE_ENV === 'production'
+		// };
 
 		user.password = undefined;
 
-		res.cookie('jwt', token, cookieOptions);
+		// res.cookie('jwt', token, cookieOptions);
 
 		res.status(200).json({
 			status: 'success',
 			data: {
-				user
+				user,
+				token
 			}
 		});
 	}
@@ -65,8 +66,14 @@ export const login = catchAsync(
 
 export const protect = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		if (!req.cookies.jwt) return next(new AppError('ERROR: Please Login', 400));
-		const token = req.cookies.jwt;
+		let token;
+		if (
+			req.headers.authorization &&
+			req.headers.authorization.startsWith('Bearer')
+		) {
+			// eslint-disable-next-line prefer-destructuring
+			token = req.headers.authorization.split('Bearer ')[1];
+		}
 
 		if (!token) return next(new AppError('ERROR: Please Login', 400));
 
@@ -93,19 +100,22 @@ export const logout = catchAsync(
 		if (!user) return next(new AppError('ERROR: Cannot find user.', 400));
 
 		const token = jwt.sign({ logout: 'logout' }, process.env.JWT_SECRET!, {
-			expiresIn: '1s'
+			expiresIn: '3s'
 		});
 
-		const cookieOptions = {
-			expires: new Date(Date.now() + 1 * 1000),
-			httpOnly: true
-			// secure: process.env.NODE_ENV === 'production'
-		};
+		// const cookieOptions = {
+		// 	expires: new Date(Date.now() + 1 * 1000),
+		// 	httpOnly: true
+		// 	// secure: process.env.NODE_ENV === 'production'
+		// };
 
-		res.cookie('jwt', token, cookieOptions);
+		// res.cookie('jwt', token, cookieOptions);
 
 		res.status(200).json({
-			status: 'success'
+			status: 'success',
+			data: {
+				token
+			}
 		});
 	}
 );

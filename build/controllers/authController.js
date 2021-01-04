@@ -40,25 +40,30 @@ exports.login = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
-    const expire = process.env.JWT_COOKIE_EXPIRES_IN || 1;
-    const cookieOptions = {
-        expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-        httpOnly: true
-        // secure: process.env.NODE_ENV === 'production'
-    };
+    // const expire =
+    // 	((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
+    // const cookieOptions = {
+    // 	expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+    // 	httpOnly: true
+    // 	// secure: process.env.NODE_ENV === 'production'
+    // };
     user.password = undefined;
-    res.cookie('jwt', token, cookieOptions);
+    // res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
         status: 'success',
         data: {
-            user
+            user,
+            token
         }
     });
 }));
 exports.protect = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.cookies.jwt)
-        return next(new AppError_1.default('ERROR: Please Login', 400));
-    const token = req.cookies.jwt;
+    let token;
+    if (req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')) {
+        // eslint-disable-next-line prefer-destructuring
+        token = req.headers.authorization.split('Bearer ')[1];
+    }
     if (!token)
         return next(new AppError_1.default('ERROR: Please Login', 400));
     const decode = jwt.verify(token, process.env.JWT_SECRET);
@@ -76,16 +81,19 @@ exports.logout = catchAsync_1.default((req, res, next) => __awaiter(void 0, void
     if (!user)
         return next(new AppError_1.default('ERROR: Cannot find user.', 400));
     const token = jwt.sign({ logout: 'logout' }, process.env.JWT_SECRET, {
-        expiresIn: '1s'
+        expiresIn: '3s'
     });
-    const cookieOptions = {
-        expires: new Date(Date.now() + 1 * 1000),
-        httpOnly: true
-        // secure: process.env.NODE_ENV === 'production'
-    };
-    res.cookie('jwt', token, cookieOptions);
+    // const cookieOptions = {
+    // 	expires: new Date(Date.now() + 1 * 1000),
+    // 	httpOnly: true
+    // 	// secure: process.env.NODE_ENV === 'production'
+    // };
+    // res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
-        status: 'success'
+        status: 'success',
+        data: {
+            token
+        }
     });
 }));
 const restrictTo = (...roles) => (req, res, next) => {

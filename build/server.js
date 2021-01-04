@@ -31,6 +31,7 @@ app.use(cookieParser());
 app.use(xss());
 app.use(compression());
 // routes
+app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/auth', routes_1.authRouter);
 app.use('/api/apply', routes_1.applyRouter);
 app.use('/api/pledge', routes_1.pledgeRouter);
