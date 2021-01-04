@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts --exec ts-node",
     "build": "tsc -p .",
-    "start": "sudo pm2 ./build/server.js"
+    "start": "sudo pm2 restart ./build/server.js"
   },
   "keywords": [],
   "author": "",
