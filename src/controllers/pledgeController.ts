@@ -3,6 +3,7 @@ import * as multer from 'multer';
 import { Pledge, User } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
+import { pledgeRouter } from '../routes';
 
 const storage = multer.diskStorage({
 	destination(req, file, cb) {
@@ -143,20 +144,12 @@ export const updatePledge = catchAsync(
 			attributes: { exclude: ['voteCount'] }
 		});
 
-		if (
-			!pledge ||
-			(pledge.candidateId !== req.user.id && req.user.role !== 'admin')
-		)
+		if (!pledge || pledge.candidateId !== req.user.id)
 			return next(new AppError('ERROR: Permission denied', 400));
 
-		if (req.user.id === pledge.candidateId) {
-			pledge.title = req.body?.title || pledge.title;
-			pledge.content = req.body?.content || pledge.content;
-			pledge.image = image || pledge.image;
-		}
-
-		if (req.user.role === 'admin')
-			pledge.canVote = req.body?.canVote || pledge.canVote;
+		pledge.title = req.body?.title || pledge.title;
+		pledge.content = req.body?.content || pledge.content;
+		pledge.image = image || pledge.image;
 
 		await pledge.save();
 
@@ -191,6 +184,33 @@ export const deletePledge = catchAsync(
 		res.status(200).json({
 			status: 'success',
 			data: {}
+		});
+	}
+);
+
+export const openOrCloseVote = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		if (req.user!.role !== 'admin')
+			return next(new AppError('ERROR: Permission denied', 400));
+
+		let pledges = await Pledge.findAll({
+			where: { school: req.user!.school },
+			attributes: { exclude: ['voteCount'] }
+		});
+
+		const pledgesPromise = pledges.map((pledge) => {
+			// eslint-disable-next-line no-param-reassign
+			pledge.canVote = !pledge.canVote;
+			return pledge.save();
+		});
+
+		pledges = await Promise.all(pledgesPromise);
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				pledges
+			}
 		});
 	}
 );

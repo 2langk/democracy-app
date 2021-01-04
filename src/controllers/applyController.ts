@@ -51,17 +51,16 @@ export const getAllApplications = catchAsync(
 export const permitApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const admin = req.user;
-		const { permission, userId } = req.body as {
+		const { permission } = req.body as {
 			permission: boolean;
-			userId: string;
 		};
 
 		if (!admin || admin.role !== 'admin')
 			return next(new AppError('This is only for admin', 400));
 
-		const userPromise = User.findByPk(userId);
+		const userPromise = User.findByPk(req.params.id);
 		const applicationPromise = Application.findOne({
-			where: { userId }
+			where: { userId: req.params.id }
 		});
 
 		const [user, application] = await Promise.all([
@@ -77,7 +76,7 @@ export const permitApplication = catchAsync(
 		)
 			return next(new AppError('ERROR: Permission Denied', 400));
 
-		if (permission) {
+		if (permission === true) {
 			user.role = 'candidate';
 		}
 		application.isConclude = true;
@@ -96,16 +95,13 @@ export const permitApplication = catchAsync(
 export const deleteApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const admin = req.user;
-		const { userId } = req.body as {
-			userId: string;
-		};
 
 		if (!admin || admin.role !== 'admin')
 			return next(new AppError('This is only for admin', 400));
 
-		const userPromise = User.findByPk(userId);
+		const userPromise = User.findByPk(req.params.id);
 		const applicationPromise = Application.findOne({
-			where: { userId }
+			where: { userId: req.params.id }
 		});
 
 		const [user, application] = await Promise.all([

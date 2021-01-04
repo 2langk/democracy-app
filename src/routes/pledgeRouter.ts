@@ -18,14 +18,15 @@ router
 router
 	.route('/admin')
 	.get(restrictTo('admin'), pledgeController.getResult)
-	.post(restrictTo('admin'), pledgeController.electPresident);
+	.post(restrictTo('admin'), pledgeController.electPresident)
+	.put(restrictTo('admin'), pledgeController.openOrCloseVote);
 
 router
 	.route('/:id')
 	.get(pledgeController.getOnePledge)
-	.post(pledgeController.voteToPledge) // for every user(same school)
+	.put(pledgeController.voteToPledge) // for every user(same school)
 	.patch(
-		restrictTo('candidate', 'admin'),
+		restrictTo('candidate'),
 		pledgeController.uploadImage,
 		pledgeController.updatePledge
 	)
