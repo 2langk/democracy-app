@@ -20,6 +20,7 @@ router
 	.route('/admin')
 	.get(restrictTo('admin'), pledgeController.getResult)
 	.post(restrictTo('admin'), pledgeController.electPresident)
+	// .patch(restrictTo('admin'), pledgeController.voteReset)
 	.put(restrictTo('admin'), pledgeController.openOrCloseVote);
 
 router

@@ -14,9 +14,15 @@ class User extends Model {
 
 	public role!: string;
 
+	public photo!: string;
+
 	public school!: string;
 
+	public schoolClass!: string;
+
 	public isVote!: boolean;
+
+	public isAuth!: boolean;
 
 	public readonly createdAt!: Date;
 
@@ -67,10 +73,15 @@ User.init(
 		role: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			defaultValue: 'user',
+			defaultValue: 'student',
 			validate: {
-				isIn: [['admin', 'president', 'council', 'candidate', 'user']]
+				isIn: [['admin', 'teacher', 'president', 'candidate', 'student']]
 			}
+		},
+
+		photo: {
+			type: DataTypes.STRING,
+			allowNull: false
 		},
 
 		school: {
@@ -81,7 +92,21 @@ User.init(
 			}
 		},
 
+		schoolClass: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				len: [2, 8]
+			}
+		},
+
 		isVote: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+
+		isAuth: {
 			type: DataTypes.BOOLEAN,
 			allowNull: false,
 			defaultValue: false
@@ -94,11 +119,16 @@ User.init(
 		charset: 'utf8mb4',
 		collate: 'utf8mb4_general_ci',
 		defaultScope: {
+			where: { isAuth: true },
 			attributes: { exclude: ['password'] }
 		},
 		scopes: {
 			withPassword: {
 				attributes: { exclude: [] }
+			},
+			notAuth: {
+				where: { isAuth: false },
+				attributes: { exclude: ['password'] }
 			}
 		}
 	}
