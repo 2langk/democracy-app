@@ -25,9 +25,7 @@ exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            newApply
-        }
+        newApply
     });
 }));
 // only for admin
@@ -64,16 +62,14 @@ exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(v
         user.school !== admin.school ||
         application.isConclude === true)
         return next(new AppError_1.default('ERROR: Permission Denied', 400));
-    if (permission === true) {
+    if (permission) {
         user.role = 'candidate';
     }
     application.isConclude = true;
     yield Promise.all([user.save(), application.save()]);
     res.status(201).json({
         status: 'success',
-        data: {
-            user
-        }
+        user
     });
 }));
 exports.deleteApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -92,7 +88,6 @@ exports.deleteApplication = catchAsync_1.default((req, res, next) => __awaiter(v
         return next(new AppError_1.default('ERROR: Permission Denied', 400));
     yield application.destroy();
     res.status(201).json({
-        status: 'success',
-        data: {}
+        status: 'success'
     });
 }));

@@ -29,9 +29,7 @@ export const createPledge = catchAsync(
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				newPledge
-			}
+			newPledge
 		});
 	}
 );
@@ -57,14 +55,12 @@ export const getOnePledge = catchAsync(
 		const pledge = await Pledge.findOne({
 			where: { school: req.user!.school, candidateId: req.params.id },
 			include: { model: User, as: 'candidate' },
-			attributes: { exclude: ['id', 'voteCount'] }
+			attributes: { exclude: ['voteCount'] }
 		});
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				pledge
-			}
+			pledge
 		});
 	}
 );
@@ -96,9 +92,7 @@ export const voteToPledge = catchAsync(
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				isVote: user.isVote
-			}
+			isVote: user.isVote
 		});
 	}
 );
@@ -133,9 +127,7 @@ export const updatePledge = catchAsync(
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				pledge: update
-			}
+			pledge: update
 		});
 	}
 );
@@ -158,8 +150,7 @@ export const deletePledge = catchAsync(
 		await pledge.destroy();
 
 		res.status(200).json({
-			status: 'success',
-			data: {}
+			status: 'success'
 		});
 	}
 );
@@ -184,9 +175,34 @@ export const openOrCloseVote = catchAsync(
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				pledges
-			}
+			pledges
+		});
+	}
+);
+
+export const voteReset = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		if (req.user!.role !== 'admin')
+			return next(new AppError('ERROR: Permission denied', 400));
+
+		let pledges = await Pledge.findAll({
+			where: { school: req.user!.school },
+			attributes: { exclude: ['voteCount'] }
+		});
+
+		const pledgesPromise = pledges.map((pledge) => {
+			// eslint-disable-next-line no-param-reassign
+			pledge.canVote = false;
+			// eslint-disable-next-line no-param-reassign
+			pledge.voteCount = 0;
+			return pledge.save();
+		});
+
+		pledges = await Promise.all(pledgesPromise);
+
+		res.status(200).json({
+			status: 'success',
+			pledges
 		});
 	}
 );
@@ -202,11 +218,17 @@ export const getResult = catchAsync(
 			}
 		});
 
+		const max = (await Pledge.max('voteCount')) as number;
+
+		const winner = await Pledge.findAll({
+			where: { voteCount: max },
+			attributes: ['candidateId']
+		});
+
 		res.status(200).json({
 			status: 'success',
-			data: {
-				pledges
-			}
+			pledges,
+			winner
 		});
 	}
 );
@@ -217,16 +239,16 @@ export const electPresident = catchAsync(
 
 		const president = await User.findByPk(candidateId);
 
-		if (president!.school !== req.user!.school)
+		if (!president || president!.school !== req.user!.school)
 			return next(new AppError('ERROR: Permission denied', 400));
 
-		president!.role = 'president';
+		president.role = 'president';
+
+		await president.save();
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				president
-			}
+			president
 		});
 	}
 );

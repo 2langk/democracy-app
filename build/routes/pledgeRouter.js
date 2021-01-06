@@ -14,6 +14,7 @@ router
     .route('/admin')
     .get(authController_1.restrictTo('admin'), pledgeController.getResult)
     .post(authController_1.restrictTo('admin'), pledgeController.electPresident)
+    .patch(authController_1.restrictTo('admin'), pledgeController.voteReset)
     .put(authController_1.restrictTo('admin'), pledgeController.openOrCloseVote);
 router
     .route('/:id')

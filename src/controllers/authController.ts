@@ -14,7 +14,7 @@ export const registerForTeacher = catchAsync(
 		);
 
 		const match = result.data.dataSearch.content.find((s: any) => {
-			return s.schoolName === `${req.body.school}등학교`;
+			return s.schoolName === `${school}등학교`;
 		});
 
 		if (!match || match.seq !== schoolCode) {
@@ -56,8 +56,6 @@ export const registerForStudent = catchAsync(
 			return s.schoolName === `${req.body.school}등학교`;
 		});
 
-		console.log(req.body);
-
 		if (!match) {
 			return next(new AppError('ERROR: Cannot find school!', 400));
 		}
@@ -90,7 +88,7 @@ export const login = catchAsync(
 			where: { email }
 		});
 
-		if (!user || user.isAuth === false)
+		if (!user || !user.isAuth)
 			return next(new AppError('ERROR: Cannot find user or not auth ', 400));
 
 		// Password is Not valid.
@@ -139,7 +137,8 @@ export const protect = catchAsync(
 
 		const currentUser = await User.findByPk(decode.id);
 
-		if (!currentUser) return next(new AppError('ERROR: Please Login', 400));
+		if (!currentUser || !currentUser.isAuth)
+			return next(new AppError('ERROR: Please Login', 400));
 
 		// if (currentUser.isChangePassword(iat)) {
 		// 	return next(new AppError('ERROR: password changed.', 401));
@@ -158,7 +157,7 @@ export const logout = catchAsync(
 		if (!user) return next(new AppError('ERROR: Cannot find user.', 400));
 
 		const token = jwt.sign({ logout: 'logout' }, process.env.JWT_SECRET!, {
-			expiresIn: '3s'
+			expiresIn: '2s'
 		});
 
 		// const cookieOptions = {
@@ -219,11 +218,13 @@ export const authStudent = catchAsync(
 		if (!student) return next(new AppError(`ERROR: Permission denied.`, 400));
 
 		student.isAuth = true;
+		student.photo = 'default';
 
 		await student.save();
 
 		res.status(200).json({
-			status: 'success'
+			status: 'success',
+			student
 		});
 	}
 );

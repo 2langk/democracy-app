@@ -53,10 +53,14 @@ User.init({
     role: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'user',
+        defaultValue: 'student',
         validate: {
-            isIn: [['admin', 'president', 'council', 'candidate', 'user']]
+            isIn: [['admin', 'teacher', 'president', 'candidate', 'student']]
         }
+    },
+    photo: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
     },
     school: {
         type: sequelize_1.DataTypes.STRING,
@@ -65,7 +69,19 @@ User.init({
             len: [2, 8]
         }
     },
+    schoolClass: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: [2, 8]
+        }
+    },
     isVote: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+    isAuth: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
@@ -77,11 +93,16 @@ User.init({
     charset: 'utf8mb4',
     collate: 'utf8mb4_general_ci',
     defaultScope: {
+        where: { isAuth: true },
         attributes: { exclude: ['password'] }
     },
     scopes: {
         withPassword: {
             attributes: { exclude: [] }
+        },
+        notAuth: {
+            where: { isAuth: false },
+            attributes: { exclude: ['password'] }
         }
     }
 });

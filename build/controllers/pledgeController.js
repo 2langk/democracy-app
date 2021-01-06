@@ -20,7 +20,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.electPresident = exports.getResult = exports.openOrCloseVote = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = void 0;
+exports.electPresident = exports.getResult = exports.voteReset = exports.openOrCloseVote = exports.deletePledge = exports.updatePledge = exports.voteToPledge = exports.getOnePledge = exports.getAllPledges = exports.createPledge = void 0;
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
 const AppError_1 = require("../utils/AppError");
@@ -44,9 +44,7 @@ exports.createPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     });
     res.status(200).json({
         status: 'success',
-        data: {
-            newPledge
-        }
+        newPledge
     });
 }));
 exports.getAllPledges = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,13 +63,11 @@ exports.getOnePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     const pledge = yield models_1.Pledge.findOne({
         where: { school: req.user.school, candidateId: req.params.id },
         include: { model: models_1.User, as: 'candidate' },
-        attributes: { exclude: ['id', 'voteCount'] }
+        attributes: { exclude: ['voteCount'] }
     });
     res.status(200).json({
         status: 'success',
-        data: {
-            pledge
-        }
+        pledge
     });
 }));
 exports.voteToPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -91,9 +87,7 @@ exports.voteToPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     yield Promise.all([user.save(), pledge.save()]).catch(() => next(new AppError_1.default('ERROR: VOTE, Please try again', 500)));
     res.status(200).json({
         status: 'success',
-        data: {
-            isVote: user.isVote
-        }
+        isVote: user.isVote
     });
 }));
 exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -120,9 +114,7 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     const _c = pledge.toJSON(), { id } = _c, update = __rest(_c, ["id"]);
     res.status(200).json({
         status: 'success',
-        data: {
-            pledge: update
-        }
+        pledge: update
     });
 }));
 exports.deletePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -137,8 +129,7 @@ exports.deletePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         return next(new AppError_1.default('ERROR: Permission denied', 400));
     yield pledge.destroy();
     res.status(200).json({
-        status: 'success',
-        data: {}
+        status: 'success'
     });
 }));
 exports.openOrCloseVote = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -156,9 +147,27 @@ exports.openOrCloseVote = catchAsync_1.default((req, res, next) => __awaiter(voi
     pledges = yield Promise.all(pledgesPromise);
     res.status(200).json({
         status: 'success',
-        data: {
-            pledges
-        }
+        pledges
+    });
+}));
+exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.user.role !== 'admin')
+        return next(new AppError_1.default('ERROR: Permission denied', 400));
+    let pledges = yield models_1.Pledge.findAll({
+        where: { school: req.user.school },
+        attributes: { exclude: ['voteCount'] }
+    });
+    const pledgesPromise = pledges.map((pledge) => {
+        // eslint-disable-next-line no-param-reassign
+        pledge.canVote = false;
+        // eslint-disable-next-line no-param-reassign
+        pledge.voteCount = 0;
+        return pledge.save();
+    });
+    pledges = yield Promise.all(pledgesPromise);
+    res.status(200).json({
+        status: 'success',
+        pledges
     });
 }));
 exports.getResult = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -170,23 +179,26 @@ exports.getResult = catchAsync_1.default((req, res, next) => __awaiter(void 0, v
             attributes: { exclude: ['password'] }
         }
     });
+    const max = (yield models_1.Pledge.max('voteCount'));
+    const winner = yield models_1.Pledge.findAll({
+        where: { voteCount: max },
+        attributes: ['candidateId']
+    });
     res.status(200).json({
         status: 'success',
-        data: {
-            pledges
-        }
+        pledges,
+        winner
     });
 }));
 exports.electPresident = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { candidateId } = req.body;
     const president = yield models_1.User.findByPk(candidateId);
-    if (president.school !== req.user.school)
+    if (!president || president.school !== req.user.school)
         return next(new AppError_1.default('ERROR: Permission denied', 400));
     president.role = 'president';
+    yield president.save();
     res.status(200).json({
         status: 'success',
-        data: {
-            president
-        }
+        president
     });
 }));

@@ -19,9 +19,7 @@ export const createApplication = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				newApply
-			}
+			newApply
 		});
 	}
 );
@@ -76,18 +74,17 @@ export const permitApplication = catchAsync(
 		)
 			return next(new AppError('ERROR: Permission Denied', 400));
 
-		if (permission === true) {
+		if (permission) {
 			user.role = 'candidate';
 		}
+
 		application.isConclude = true;
 
 		await Promise.all([user.save(), application.save()]);
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				user
-			}
+			user
 		});
 	}
 );
@@ -115,8 +112,7 @@ export const deleteApplication = catchAsync(
 		await application.destroy();
 
 		res.status(201).json({
-			status: 'success',
-			data: {}
+			status: 'success'
 		});
 	}
 );
