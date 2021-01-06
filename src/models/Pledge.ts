@@ -13,7 +13,7 @@ class Pledge extends Model {
 
 	public school!: string;
 
-	public image?: string;
+	public image?: string | string[];
 
 	public canVote!: boolean;
 

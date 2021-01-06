@@ -17,7 +17,8 @@ import {
 	authRouter,
 	pledgeRouter,
 	evalRouter,
-	questionRouter
+	questionRouter,
+	eduRouter
 } from './routes';
 
 dotenv.config({ path: './config.env' });
@@ -51,6 +52,7 @@ app.use('/api/apply', applyRouter);
 app.use('/api/pledge', pledgeRouter);
 app.use('/api/evaluation', evalRouter);
 app.use('/api/question', questionRouter);
+app.use('/api/edu', eduRouter);
 
 app.all('*', (req, res, next) => {
 	return next(new AppError(`Can't find URL on this server!`, 404));

@@ -58,6 +58,12 @@ export const getOnePledge = catchAsync(
 			attributes: { exclude: ['voteCount'] }
 		});
 
+		if (!pledge) return next(new AppError('ERROR: Cannot find pledge', 400));
+
+		pledge.image = (pledge.image as string).split(',');
+
+		pledge.image.pop();
+
 		res.status(200).json({
 			status: 'success',
 			pledge
@@ -124,6 +130,10 @@ export const updatePledge = catchAsync(
 		await pledge.save();
 
 		const { id, ...update } = pledge.toJSON() as Pledge;
+
+		update.image = (update.image as string).split(',');
+
+		update.image.pop();
 
 		res.status(200).json({
 			status: 'success',
