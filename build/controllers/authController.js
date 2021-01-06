@@ -44,7 +44,8 @@ exports.registerForTeacher = catchAsync_1.default((req, res, next) => __awaiter(
     });
 }));
 exports.registerForStudent = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, password, school, schoolClass, photo } = req.body;
+    const { name, email, password, school, schoolClass } = req.body;
+    const photo = req.file.key;
     const result = yield axios_1.default.get('http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=aa3d3a5f6bd1d9de0b6c146efa360489&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2500');
     const match = result.data.dataSearch.content.find((s) => {
         return s.schoolName === `${req.body.school}등학교`;

@@ -37,6 +37,8 @@ app.use('/api/apply', routes_1.applyRouter);
 app.use('/api/pledge', routes_1.pledgeRouter);
 app.use('/api/evaluation', routes_1.evalRouter);
 app.use('/api/question', routes_1.questionRouter);
+app.use('/api/edu', routes_1.eduRouter);
+app.use('/api/user', routes_1.userRouter);
 app.all('*', (req, res, next) => {
     return next(new AppError_1.default(`Can't find URL on this server!`, 404));
 });

@@ -139,12 +139,12 @@ User.beforeSave(async (user: User) => {
 	}
 });
 
-User.beforeCreate(async (user: User) => {
-	if (user.changed('password')) {
-		// eslint-disable-next-line no-param-reassign
-		user.password = await bcrypt.hash(user.password!, 12);
-	}
-});
+// User.beforeCreate(async (user: User) => {
+// 	if (user.changed('password')) {
+// 		// eslint-disable-next-line no-param-reassign
+// 		user.password = await bcrypt.hash(user.password!, 12);
+// 	}
+// });
 
 export const associate = (db: dbType): void => {
 	User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });

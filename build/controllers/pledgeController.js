@@ -65,6 +65,10 @@ exports.getOnePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         include: { model: models_1.User, as: 'candidate' },
         attributes: { exclude: ['voteCount'] }
     });
+    if (!pledge)
+        return next(new AppError_1.default('ERROR: Cannot find pledge', 400));
+    pledge.image = pledge.image.split(',');
+    pledge.image.pop();
     res.status(200).json({
         status: 'success',
         pledge
@@ -112,6 +116,8 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     pledge.image = image || pledge.image;
     yield pledge.save();
     const _c = pledge.toJSON(), { id } = _c, update = __rest(_c, ["id"]);
+    update.image = update.image.split(',');
+    update.image.pop();
     res.status(200).json({
         status: 'success',
         pledge: update

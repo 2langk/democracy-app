@@ -13,6 +13,7 @@ router
 	.post(
 		restrictTo('candidate'),
 		uploadPledgeImages.array('images'),
+		(req, res) => console.log(req.body),
 		pledgeController.createPledge
 	);
 
