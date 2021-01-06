@@ -46,7 +46,8 @@ export const registerForTeacher = catchAsync(
 
 export const registerForStudent = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { name, email, password, school, schoolClass, photo } = req.body;
+		const { name, email, password, school, schoolClass } = req.body;
+		const photo = req.file.key;
 
 		const result = await axios.get(
 			'http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=aa3d3a5f6bd1d9de0b6c146efa360489&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2500'

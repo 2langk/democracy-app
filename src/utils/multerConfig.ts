@@ -10,7 +10,7 @@ AWS.config.update({
 	secretAccessKey: process.env.AWS_S3_SECRET
 });
 
-const fileFilter = (
+const imageFilter = (
 	req: Request,
 	file: Express.Multer.File,
 	cb: multer.FileFilterCallback
@@ -19,6 +19,18 @@ const fileFilter = (
 		cb(null, true);
 	} else {
 		cb(new AppError('Please upload only images.', 400));
+	}
+};
+
+const videoFilter = (
+	req: Request,
+	file: Express.Multer.File,
+	cb: multer.FileFilterCallback
+) => {
+	if (file.mimetype.startsWith('video')) {
+		cb(null, true);
+	} else {
+		cb(new AppError('Please upload only video.', 400));
 	}
 };
 
@@ -31,11 +43,13 @@ export const uploadPledgeImages = multer({
 		key(req, file, cb) {
 			cb(
 				null,
-				`${req.user!.name}-${Date.now()}.${file.mimetype.split('/')[1]}`
+				`pledgeImage-${req.user!.name}-${Date.now()}.${
+					file.mimetype.split('/')[1]
+				}`
 			);
 		}
 	}),
-	fileFilter,
+	fileFilter: imageFilter,
 	limits: { fileSize: 10 * 1024 * 1024 }
 });
 
@@ -47,10 +61,30 @@ export const uploadUserPhoto = multer({
 		key(req, file, cb) {
 			cb(
 				null,
-				`${req.user!.name}-${Date.now()}.${file.mimetype.split('/')[1]}`
+				`userPhoto-${req.user?.name || 'auth'}-${Date.now()}.${
+					file.mimetype.split('/')[1]
+				}`
 			);
 		}
 	}),
-	fileFilter,
+	fileFilter: imageFilter,
 	limits: { fileSize: 10 * 1024 * 1024 }
+});
+
+export const uploadEduVideo = multer({
+	storage: multerS3({
+		s3: new AWS.S3(),
+		bucket: '2langk-s3-bucket/democracy-app/public/video',
+		acl: 'public-read',
+		key(req, file, cb) {
+			cb(
+				null,
+				`eduVideo-${req.user!.name}-${Date.now()}.${
+					file.mimetype.split('/')[1]
+				}`
+			);
+		}
+	}),
+	fileFilter: videoFilter,
+	limits: { fileSize: 100 * 1024 * 1024 }
 });
