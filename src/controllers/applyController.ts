@@ -7,7 +7,11 @@ export const createApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { title } = req.body;
 		const { user } = req;
+		const admin = await User.findOne({ where: { role: 'admin' } });
 
+		if (!admin || admin.schoolClass !== 'open') {
+			return next(new AppError('Error: Permission Denied', 400));
+		}
 		if (!user || !title)
 			return next(new AppError('Cannot find user or title', 400));
 
@@ -20,6 +24,25 @@ export const createApplication = catchAsync(
 		res.status(201).json({
 			status: 'success',
 			newApply
+		});
+	}
+);
+
+export const openOrCloseBoard = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const admin = await User.findOne({ where: { id: req.user!.id } });
+
+		if (!admin || admin.role !== 'admin') {
+			return next(new AppError('Error: Permission Denied', 400));
+		}
+
+		admin.schoolClass = admin.schoolClass === 'open' ? 'close' : 'open';
+
+		await admin.save();
+
+		res.status(201).json({
+			status: 'success',
+			isOpen: admin.schoolClass
 		});
 	}
 );

@@ -15,6 +15,7 @@ router
 		eduController.createEduPost
 	);
 
+router.route('/:id').get(eduController.getOneEduPost);
 router.use('/', protect);
 
 export default router;

@@ -38,3 +38,14 @@ export const getAllEduPost = catchAsync(
 		});
 	}
 );
+
+export const getOneEduPost = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const eduPost = await EduPost.findOne({ where: { id: req.params.id } });
+
+		res.status(201).json({
+			status: 'success',
+			eduPost
+		});
+	}
+);
