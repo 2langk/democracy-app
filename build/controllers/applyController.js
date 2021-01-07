@@ -9,13 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteApplication = exports.permitApplication = exports.getAllApplications = exports.createApplication = void 0;
+exports.deleteApplication = exports.permitApplication = exports.getAllApplications = exports.openOrCloseBoard = exports.createApplication = void 0;
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
 const AppError_1 = require("../utils/AppError");
 exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { title } = req.body;
     const { user } = req;
+    const admin = yield models_1.User.findOne({ where: { role: 'admin' } });
+    if (!admin || admin.schoolClass !== 'open') {
+        return next(new AppError_1.default('Error: Permission Denied', 400));
+    }
     if (!user || !title)
         return next(new AppError_1.default('Cannot find user or title', 400));
     const newApply = yield models_1.Application.create({
@@ -26,6 +30,18 @@ exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     res.status(201).json({
         status: 'success',
         newApply
+    });
+}));
+exports.openOrCloseBoard = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const admin = yield models_1.User.findOne({ where: { id: req.user.id } });
+    if (!admin || admin.role !== 'admin') {
+        return next(new AppError_1.default('Error: Permission Denied', 400));
+    }
+    admin.schoolClass = admin.schoolClass === 'open' ? 'close' : 'open';
+    yield admin.save();
+    res.status(201).json({
+        status: 'success',
+        isOpen: admin.schoolClass
     });
 }));
 // only for admin

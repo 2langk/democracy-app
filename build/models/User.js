@@ -46,9 +46,7 @@ User.init({
     password: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: [3, 20]
-        }
+        validate: {}
     },
     role: {
         type: sequelize_1.DataTypes.STRING,
@@ -106,18 +104,22 @@ User.init({
         }
     }
 });
-User.beforeCreate((user) => __awaiter(void 0, void 0, void 0, function* () {
+User.beforeSave((user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user.changed('password')) {
         // eslint-disable-next-line no-param-reassign
         user.password = yield bcrypt.hash(user.password, 12);
     }
 }));
+// User.beforeCreate(async (user: User) => {
+// 	if (user.changed('password')) {
+// 		// eslint-disable-next-line no-param-reassign
+// 		user.password = await bcrypt.hash(user.password!, 12);
+// 	}
+// });
 const associate = (db) => {
     User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });
     User.hasOne(db.Application, { foreignKey: 'userId', as: 'application' });
     User.hasMany(db.Evalutation, { foreignKey: 'presidentId', as: 'evaluation' });
-    // eslint-disable-next-line prettier/prettier
-    User.hasMany(db.PublicOpinion, { foreignKey: 'candidateId', as: 'publicOpinion' });
     User.hasMany(db.Question, { foreignKey: 'userId', as: 'question' });
     User.hasMany(db.Answer, { foreignKey: 'userId', as: 'answer' });
 };

@@ -44,7 +44,11 @@ exports.registerForTeacher = catchAsync_1.default((req, res, next) => __awaiter(
     });
 }));
 exports.registerForStudent = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, password, school, schoolClass, photo } = req.body;
+    var _a, _b;
+    const { name, email, password, school, schoolClass } = req.body;
+    const photo = (_b = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.location) === null || _b === void 0 ? void 0 : _b.split('public/')[1];
+    if (!photo)
+        return next(new AppError_1.default('ERROR: Please send photo!', 400));
     const result = yield axios_1.default.get('http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=aa3d3a5f6bd1d9de0b6c146efa360489&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2500');
     const match = result.data.dataSearch.content.find((s) => {
         return s.schoolName === `${req.body.school}등학교`;
@@ -81,15 +85,14 @@ exports.login = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
-    // const expire =
-    // 	((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
-    // const cookieOptions = {
-    // 	expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-    // 	httpOnly: true
-    // 	// secure: process.env.NODE_ENV === 'production'
-    // };
+    const expire = process.env.JWT_COOKIE_EXPIRES_IN || 1;
+    const cookieOptions = {
+        expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+        httpOnly: true
+        // secure: process.env.NODE_ENV === 'production'
+    };
     user.password = undefined;
-    // res.cookie('jwt', token, cookieOptions);
+    res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
         status: 'success',
         user,
@@ -101,7 +104,7 @@ exports.protect = catchAsync_1.default((req, res, next) => __awaiter(void 0, voi
     if (req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')) {
         // eslint-disable-next-line prefer-destructuring
-        token = req.headers.authorization.split('Bearer ')[1];
+        token = req.headers.authorization.split('Bearer ')[1] || req.cookies.jwt;
     }
     if (!token)
         return next(new AppError_1.default('ERROR: Please Login', 400));
@@ -122,12 +125,12 @@ exports.logout = catchAsync_1.default((req, res, next) => __awaiter(void 0, void
     const token = jwt.sign({ logout: 'logout' }, process.env.JWT_SECRET, {
         expiresIn: '2s'
     });
-    // const cookieOptions = {
-    // 	expires: new Date(Date.now() + 1 * 1000),
-    // 	httpOnly: true
-    // 	// secure: process.env.NODE_ENV === 'production'
-    // };
-    // res.cookie('jwt', token, cookieOptions);
+    const cookieOptions = {
+        expires: new Date(Date.now() + 1 * 1000),
+        httpOnly: true
+        // secure: process.env.NODE_ENV === 'production'
+    };
+    res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
         status: 'success',
         token

@@ -47,7 +47,9 @@ export const registerForTeacher = catchAsync(
 export const registerForStudent = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const { name, email, password, school, schoolClass } = req.body;
-		const photo = req.file.key;
+		const photo = req?.file?.location?.split('public/')[1];
+
+		if (!photo) return next(new AppError('ERROR: Please send photo!', 400));
 
 		const result = await axios.get(
 			'http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=aa3d3a5f6bd1d9de0b6c146efa360489&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&perPage=2500'
@@ -100,18 +102,18 @@ export const login = catchAsync(
 			expiresIn: process.env.JWT_EXPIRES_IN
 		});
 
-		// const expire =
-		// 	((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
+		const expire =
+			((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
 
-		// const cookieOptions = {
-		// 	expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-		// 	httpOnly: true
-		// 	// secure: process.env.NODE_ENV === 'production'
-		// };
+		const cookieOptions = {
+			expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+			httpOnly: true
+			// secure: process.env.NODE_ENV === 'production'
+		};
 
 		user.password = undefined;
 
-		// res.cookie('jwt', token, cookieOptions);
+		res.cookie('jwt', token, cookieOptions);
 
 		res.status(200).json({
 			status: 'success',
@@ -129,7 +131,7 @@ export const protect = catchAsync(
 			req.headers.authorization.startsWith('Bearer')
 		) {
 			// eslint-disable-next-line prefer-destructuring
-			token = req.headers.authorization.split('Bearer ')[1];
+			token = req.headers.authorization.split('Bearer ')[1] || req.cookies.jwt;
 		}
 
 		if (!token) return next(new AppError('ERROR: Please Login', 400));
@@ -161,13 +163,13 @@ export const logout = catchAsync(
 			expiresIn: '2s'
 		});
 
-		// const cookieOptions = {
-		// 	expires: new Date(Date.now() + 1 * 1000),
-		// 	httpOnly: true
-		// 	// secure: process.env.NODE_ENV === 'production'
-		// };
+		const cookieOptions = {
+			expires: new Date(Date.now() + 1 * 1000),
+			httpOnly: true
+			// secure: process.env.NODE_ENV === 'production'
+		};
 
-		// res.cookie('jwt', token, cookieOptions);
+		res.cookie('jwt', token, cookieOptions);
 
 		res.status(200).json({
 			status: 'success',

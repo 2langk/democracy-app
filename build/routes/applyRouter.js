@@ -8,7 +8,8 @@ router.use('/', authController_1.protect);
 router
     .route('/')
     .post(applyController.createApplication)
-    .get(authController_1.restrictTo('admin'), applyController.getAllApplications);
+    .get(authController_1.restrictTo('admin'), applyController.getAllApplications)
+    .put(authController_1.restrictTo('admin'), applyController.openOrCloseBoard);
 // only for admin
 router.use(authController_1.restrictTo('admin'));
 router

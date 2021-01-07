@@ -65,9 +65,7 @@ User.init(
 		password: {
 			type: DataTypes.STRING,
 			allowNull: false,
-			validate: {
-				len: [3, 20]
-			}
+			validate: {}
 		},
 
 		role: {
@@ -134,12 +132,19 @@ User.init(
 	}
 );
 
-User.beforeCreate(async (user: User) => {
+User.beforeSave(async (user: User) => {
 	if (user.changed('password')) {
 		// eslint-disable-next-line no-param-reassign
 		user.password = await bcrypt.hash(user.password!, 12);
 	}
 });
+
+// User.beforeCreate(async (user: User) => {
+// 	if (user.changed('password')) {
+// 		// eslint-disable-next-line no-param-reassign
+// 		user.password = await bcrypt.hash(user.password!, 12);
+// 	}
+// });
 
 export const associate = (db: dbType): void => {
 	User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });
