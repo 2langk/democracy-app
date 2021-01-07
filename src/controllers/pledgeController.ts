@@ -12,7 +12,7 @@ export const createPledge = catchAsync(
 		let image = '';
 		if (files) {
 			files.forEach((file) => {
-				image += `${file.key},`;
+				image += `${file.location.split('public/')[1]},`;
 			});
 		}
 

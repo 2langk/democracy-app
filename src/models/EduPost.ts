@@ -36,7 +36,7 @@ EduPost.init(
 
 		video: {
 			type: DataTypes.STRING,
-			allowNull: false
+			allowNull: true
 		},
 
 		content: {

@@ -11,7 +11,11 @@ export const createEduPost = catchAsync(
 		if (!user || user!.role !== 'admin')
 			return next(new AppError('ERROR: Permission Denied.', 400));
 
-		const video = req.file.key;
+		let video = '';
+		if (req.file) {
+			// eslint-disable-next-line prefer-destructuring
+			video = req.file.location!.split('public/')[1];
+		}
 
 		const newEduPost = await EduPost.create({
 			title,
