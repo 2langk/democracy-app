@@ -30,7 +30,7 @@ exports.createPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     let image = '';
     if (files) {
         files.forEach((file) => {
-            image += `${file.key},`;
+            image += `${file.location.split('public/')[1]},`;
         });
     }
     if (!title || !content)

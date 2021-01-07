@@ -9,7 +9,7 @@ router.use(authController_1.protect);
 router
     .route('/')
     .get(pledgeController.getAllPledges)
-    .post(authController_1.restrictTo('candidate'), multerConfig_1.uploadPledgeImages.array('images'), (req, res) => console.log(req.body), pledgeController.createPledge);
+    .post(authController_1.restrictTo('candidate'), multerConfig_1.uploadPledgeImages.array('images'), pledgeController.createPledge);
 router
     .route('/admin')
     .get(authController_1.restrictTo('admin'), pledgeController.getResult)

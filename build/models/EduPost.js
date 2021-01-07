@@ -16,7 +16,7 @@ EduPost.init({
     },
     video: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     content: {
         type: sequelize_1.DataTypes.STRING,

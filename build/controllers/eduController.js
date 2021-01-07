@@ -18,7 +18,11 @@ exports.createEduPost = catchAsync_1.default((req, res, next) => __awaiter(void 
     const { title, content } = req.body;
     if (!user || user.role !== 'admin')
         return next(new AppError_1.default('ERROR: Permission Denied.', 400));
-    const video = req.file.key;
+    let video = '';
+    if (req.file) {
+        // eslint-disable-next-line prefer-destructuring
+        video = req.file.location.split('public/')[1];
+    }
     const newEduPost = yield models_1.EduPost.create({
         title,
         video,

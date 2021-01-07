@@ -33,8 +33,6 @@ exports.uploadPledgeImages = multer({
         bucket: '2langk-s3-bucket/democracy-app/public/image',
         acl: 'public-read',
         key(req, file, cb) {
-            console.log(file);
-            console.log(req.user);
             cb(null, `pledgeImage-${req.user.name}-${Date.now()}.${file.mimetype.split('/')[1]}`);
         }
     }),
