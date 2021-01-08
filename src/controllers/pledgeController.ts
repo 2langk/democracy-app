@@ -43,9 +43,7 @@ export const getAllPledges = catchAsync(
 
 		res.status(200).json({
 			status: 'success',
-			data: {
-				pledges
-			}
+			pledges
 		});
 	}
 );

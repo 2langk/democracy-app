@@ -21,9 +21,7 @@ export const createEvaluation = catchAsync(
 		newEval.id = undefined;
 		res.status(201).json({
 			status: 'success',
-			data: {
-				newEval
-			}
+			newEval
 		});
 	}
 );
@@ -43,9 +41,7 @@ export const getEvaluationAVG = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				ratingAVG
-			}
+			ratingAVG
 		});
 	}
 );
@@ -59,9 +55,7 @@ export const getMyEvaluation = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				evaluation
-			}
+			evaluation
 		});
 	}
 );
@@ -80,9 +74,7 @@ export const updateMyEvaluation = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				evaluation: update
-			}
+			evaluation: update
 		});
 	}
 );

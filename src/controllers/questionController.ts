@@ -20,9 +20,7 @@ export const createQuestion = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				newQuestion
-			}
+			newQuestion
 		});
 	}
 );
@@ -35,9 +33,7 @@ export const getAllQuestion = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				questions
-			}
+			questions
 		});
 	}
 );
@@ -67,9 +63,7 @@ export const getOneQuestion = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				question
-			}
+			question
 		});
 	}
 );
@@ -92,9 +86,7 @@ export const updateQuestion = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				question
-			}
+			question
 		});
 	}
 );
@@ -109,8 +101,7 @@ export const deleteQuestion = catchAsync(
 		await question.destroy();
 
 		res.status(201).json({
-			status: 'success',
-			data: {}
+			status: 'success'
 		});
 	}
 );
@@ -130,9 +121,7 @@ export const createAnswer = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				newAnswer
-			}
+			newAnswer
 		});
 	}
 );
@@ -152,9 +141,7 @@ export const updateAnswer = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				answer
-			}
+			answer
 		});
 	}
 );
@@ -171,8 +158,7 @@ export const deleteAnswer = catchAsync(
 		await answer.destroy();
 
 		res.status(201).json({
-			status: 'success',
-			data: {}
+			status: 'success'
 		});
 	}
 );

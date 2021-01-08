@@ -24,8 +24,8 @@ app.use(rateLimit({
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests!'
 }));
-app.use(express.static('uploads'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // After body-parser
 app.use(xss());

@@ -38,9 +38,7 @@ exports.createEvaluation = catchAsync_1.default((req, res, next) => __awaiter(vo
     newEval.id = undefined;
     res.status(201).json({
         status: 'success',
-        data: {
-            newEval
-        }
+        newEval
     });
 }));
 exports.getEvaluationAVG = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,9 +52,7 @@ exports.getEvaluationAVG = catchAsync_1.default((req, res, next) => __awaiter(vo
     ratingAVG /= evaluations.length;
     res.status(201).json({
         status: 'success',
-        data: {
-            ratingAVG
-        }
+        ratingAVG
     });
 }));
 exports.getMyEvaluation = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -66,9 +62,7 @@ exports.getMyEvaluation = catchAsync_1.default((req, res, next) => __awaiter(voi
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            evaluation
-        }
+        evaluation
     });
 }));
 exports.updateMyEvaluation = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -80,8 +74,6 @@ exports.updateMyEvaluation = catchAsync_1.default((req, res, next) => __awaiter(
     const _a = evaluation === null || evaluation === void 0 ? void 0 : evaluation.toJSON(), { id } = _a, update = __rest(_a, ["id"]);
     res.status(201).json({
         status: 'success',
-        data: {
-            evaluation: update
-        }
+        evaluation: update
     });
 }));
