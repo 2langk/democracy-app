@@ -10,7 +10,6 @@ router
 	.patch(uploadUserPhoto.single('photo'), authController.registerForStudent);
 
 router.post('/login', authController.login);
-
 router.use(authController.protect);
 
 router.get('/logout', authController.logout);

@@ -54,9 +54,7 @@ exports.getAllPledges = catchAsync_1.default((req, res, next) => __awaiter(void 
     });
     res.status(200).json({
         status: 'success',
-        data: {
-            pledges
-        }
+        pledges
     });
 }));
 exports.getOnePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

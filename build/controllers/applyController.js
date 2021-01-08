@@ -55,9 +55,7 @@ exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            applications
-        }
+        applications
     });
 }));
 exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

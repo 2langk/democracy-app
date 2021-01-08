@@ -26,9 +26,7 @@ exports.createQuestion = catchAsync_1.default((req, res, next) => __awaiter(void
         return new AppError_1.default('Error: create question', 400);
     res.status(201).json({
         status: 'success',
-        data: {
-            newQuestion
-        }
+        newQuestion
     });
 }));
 exports.getAllQuestion = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,9 +35,7 @@ exports.getAllQuestion = catchAsync_1.default((req, res, next) => __awaiter(void
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            questions
-        }
+        questions
     });
 }));
 exports.getOneQuestion = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,9 +61,7 @@ exports.getOneQuestion = catchAsync_1.default((req, res, next) => __awaiter(void
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            question
-        }
+        question
     });
 }));
 exports.updateQuestion = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -83,9 +77,7 @@ exports.updateQuestion = catchAsync_1.default((req, res, next) => __awaiter(void
     question.content = content;
     res.status(201).json({
         status: 'success',
-        data: {
-            question
-        }
+        question
     });
 }));
 exports.deleteQuestion = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -94,8 +86,7 @@ exports.deleteQuestion = catchAsync_1.default((req, res, next) => __awaiter(void
         return next(new AppError_1.default('Error: permission Denied', 400));
     yield question.destroy();
     res.status(201).json({
-        status: 'success',
-        data: {}
+        status: 'success'
     });
 }));
 exports.createAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -109,9 +100,7 @@ exports.createAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0
     });
     res.status(201).json({
         status: 'success',
-        data: {
-            newAnswer
-        }
+        newAnswer
     });
 }));
 exports.updateAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -124,9 +113,7 @@ exports.updateAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0
     yield answer.save();
     res.status(201).json({
         status: 'success',
-        data: {
-            answer
-        }
+        answer
     });
 }));
 exports.deleteAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -137,7 +124,6 @@ exports.deleteAnswer = catchAsync_1.default((req, res, next) => __awaiter(void 0
         return next(new AppError_1.default('Error: Permission Denied', 400));
     yield answer.destroy();
     res.status(201).json({
-        status: 'success',
-        data: {}
+        status: 'success'
     });
 }));

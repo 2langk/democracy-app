@@ -37,7 +37,7 @@ exports.registerForTeacher = catchAsync_1.default((req, res, next) => __awaiter(
     });
     if (!newUser)
         return next(new AppError_1.default('ERROR: Cannot create user', 400));
-    delete newUser.password;
+    newUser.password = undefined;
     res.status(201).json({
         status: 'success',
         newUser

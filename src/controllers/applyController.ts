@@ -62,9 +62,7 @@ export const getAllApplications = catchAsync(
 
 		res.status(201).json({
 			status: 'success',
-			data: {
-				applications
-			}
+			applications
 		});
 	}
 );
