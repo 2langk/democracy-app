@@ -9,7 +9,7 @@ router.use('/', protect);
 router
 	.route('/')
 	.post(applyController.createApplication)
-	.get(restrictTo('admin'), applyController.getAllApplications)
+	.get(applyController.getAllApplications)
 	.put(restrictTo('admin'), applyController.openOrCloseBoard);
 
 // only for admin

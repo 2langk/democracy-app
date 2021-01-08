@@ -38,7 +38,12 @@ export const getAllPledges = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const pledges = await Pledge.findAll({
 			where: { school: req.user!.school },
-			attributes: { exclude: ['id', 'voteCount'] }
+			attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
+			include: {
+				model: User,
+				as: 'candidate',
+				attributes: { exclude: ['password', 'email', 'role'] }
+			}
 		});
 
 		res.status(200).json({
@@ -85,13 +90,13 @@ export const voteToPledge = catchAsync(
 			return next(new AppError('ERROR: You can vote to your school', 400));
 
 		if (!pledge.canVote)
-			return next(new AppError('ERROR: This is not voting time', 400));
+			return next(new AppError('ERROR: 투표 시간이 아닙니다!', 400));
 
 		user.isVote = true;
 		pledge.voteCount += 1;
 
 		await Promise.all([user.save(), pledge.save()]).catch(() =>
-			next(new AppError('ERROR: VOTE, Please try again', 500))
+			next(new AppError('ERROR: fail to vote, Please try again', 500))
 		);
 
 		res.status(200).json({
@@ -105,11 +110,12 @@ export const updatePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		if (!req.user) return next(new AppError('ERROR: Permission denied', 400));
 		const files = req.files as Array<any>;
+
 		let image = '';
 
 		if (files) {
 			files.forEach((file) => {
-				image += `${file.key},`;
+				image += `${file.location.split('public/')[1]},`;
 			});
 		}
 
@@ -182,8 +188,7 @@ export const openOrCloseVote = catchAsync(
 		pledges = await Promise.all(pledgesPromise);
 
 		res.status(200).json({
-			status: 'success',
-			pledges
+			status: 'success'
 		});
 	}
 );
