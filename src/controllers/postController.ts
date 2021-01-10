@@ -11,10 +11,23 @@ export const createPost = catchAsync(
 		if (category === 'edu' && req.user!.role !== 'admin')
 			return next(new AppError('Error: Permission Denied', 400));
 
+		const uploads = req.files as {
+			images: Express.Multer.File[];
+			video: Express.Multer.File[];
+		};
+
+		let image = '';
 		let video = '';
-		if (req.file) {
+
+		if (uploads.images) {
+			uploads.images.forEach((i) => {
+				image += `${i!.location!.split('public/')[1]},`;
+			});
+		}
+
+		if (uploads.video) {
 			// eslint-disable-next-line prefer-destructuring
-			video = req.file.location!.split('public/')[1];
+			video = uploads.video[0].location!.split('public/')[1];
 		}
 
 		const newPost = await Post.create({
@@ -23,6 +36,7 @@ export const createPost = catchAsync(
 			school,
 			category,
 			video,
+			image,
 			userId: id
 		});
 
@@ -166,18 +180,19 @@ export const getOnePost = catchAsync(
 
 		if (!post) return next(new AppError('Error: Cannot find post', 400));
 
-		// if (post.video === '') post.video = undefined;
-
-		post?.comment?.forEach((a: Comment) => {
+		post?.comment?.forEach((b: Comment) => {
 			// eslint-disable-next-line no-param-reassign
-			if (a.user?.password) {
-				a.user.password = undefined;
+			if (b.user?.password) {
+				b.user.password = undefined;
 			}
 		});
 
 		post.viewCount += 1;
 
 		await post.save();
+
+		post.image = (post.image as string).split(',');
+		post.image.pop();
 
 		res.status(201).json({
 			status: 'success',

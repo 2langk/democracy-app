@@ -11,6 +11,8 @@ class Application extends Model {
 
 	public title!: string;
 
+	public content!: string;
+
 	public isConclude!: boolean;
 
 	public readonly createdAt!: Date;
@@ -40,8 +42,13 @@ Application.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				len: [1, 10]
+				len: [1, 20]
 			}
+		},
+
+		content: {
+			type: DataTypes.STRING,
+			allowNull: false
 		},
 
 		isConclude: {

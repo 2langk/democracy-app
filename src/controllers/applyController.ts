@@ -5,7 +5,7 @@ import AppError from '../utils/AppError';
 
 export const createApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { title } = req.body;
+		const { title, content } = req.body;
 		const { user } = req;
 		const admin = await User.findOne({ where: { role: 'admin' } });
 
@@ -18,7 +18,8 @@ export const createApplication = catchAsync(
 		const newApply = await Application.create({
 			userId: user.id,
 			school: user.school,
-			title
+			title,
+			content
 		});
 
 		res.status(201).json({
@@ -47,7 +48,6 @@ export const openOrCloseBoard = catchAsync(
 	}
 );
 
-// only for admin
 export const getAllApplications = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const applications = await Application.findAll({
@@ -58,6 +58,22 @@ export const getAllApplications = catchAsync(
 		res.status(201).json({
 			status: 'success',
 			applications
+		});
+	}
+);
+
+// only for admin
+
+export const getOneApplication = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const application = await Application.findAll({
+			where: { school: req.user?.school, userId: req.params.id },
+			attributes: { exclude: ['id'] }
+		});
+
+		res.status(201).json({
+			status: 'success',
+			application
 		});
 	}
 );
