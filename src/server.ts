@@ -17,8 +17,7 @@ import {
 	authRouter,
 	pledgeRouter,
 	evalRouter,
-	questionRouter,
-	eduRouter,
+	postRouter,
 	userRouter
 } from './routes';
 
@@ -52,8 +51,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/apply', applyRouter);
 app.use('/api/pledge', pledgeRouter);
 app.use('/api/evaluation', evalRouter);
-app.use('/api/question', questionRouter);
-app.use('/api/edu', eduRouter);
+app.use('/api/post', postRouter);
 app.use('/api/user', userRouter);
 
 app.all('*', (req, res, next) => {

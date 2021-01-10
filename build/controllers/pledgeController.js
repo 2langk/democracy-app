@@ -50,7 +50,12 @@ exports.createPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
 exports.getAllPledges = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const pledges = yield models_1.Pledge.findAll({
         where: { school: req.user.school },
-        attributes: { exclude: ['id', 'voteCount'] }
+        attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
+        include: {
+            model: models_1.User,
+            as: 'candidate',
+            attributes: { exclude: ['password', 'email', 'role'] }
+        }
     });
     res.status(200).json({
         status: 'success',
@@ -83,10 +88,10 @@ exports.voteToPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     if (!user || !pledge || user.school !== pledge.school)
         return next(new AppError_1.default('ERROR: You can vote to your school', 400));
     if (!pledge.canVote)
-        return next(new AppError_1.default('ERROR: This is not voting time', 400));
+        return next(new AppError_1.default('ERROR: 투표 시간이 아닙니다!', 400));
     user.isVote = true;
     pledge.voteCount += 1;
-    yield Promise.all([user.save(), pledge.save()]).catch(() => next(new AppError_1.default('ERROR: VOTE, Please try again', 500)));
+    yield Promise.all([user.save(), pledge.save()]).catch(() => next(new AppError_1.default('ERROR: fail to vote, Please try again', 500)));
     res.status(200).json({
         status: 'success',
         isVote: user.isVote
@@ -100,7 +105,7 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     let image = '';
     if (files) {
         files.forEach((file) => {
-            image += `${file.key},`;
+            image += `${file.location.split('public/')[1]},`;
         });
     }
     const pledge = yield models_1.Pledge.findOne({
@@ -150,8 +155,7 @@ exports.openOrCloseVote = catchAsync_1.default((req, res, next) => __awaiter(voi
     });
     pledges = yield Promise.all(pledgesPromise);
     res.status(200).json({
-        status: 'success',
-        pledges
+        status: 'success'
     });
 }));
 exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -161,6 +165,9 @@ exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, v
         where: { school: req.user.school },
         attributes: { exclude: ['voteCount'] }
     });
+    if (pledges[0].canVote) {
+        return next(new AppError_1.default('Error: 투표를 먼저 종료하세요!', 400));
+    }
     const pledgesPromise = pledges.map((pledge) => {
         // eslint-disable-next-line no-param-reassign
         pledge.canVote = false;

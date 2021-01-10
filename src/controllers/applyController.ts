@@ -10,10 +10,10 @@ export const createApplication = catchAsync(
 		const admin = await User.findOne({ where: { role: 'admin' } });
 
 		if (!admin || admin.schoolClass !== 'open') {
-			return next(new AppError('Error: Permission Denied', 400));
+			return next(new AppError('Error: 입후보 신청 기간이 아닙니다.', 400));
 		}
 		if (!user || !title)
-			return next(new AppError('Cannot find user or title', 400));
+			return next(new AppError('Error: 잘못된 접근입니다.', 400));
 
 		const newApply = await Application.create({
 			userId: user.id,
@@ -50,13 +50,8 @@ export const openOrCloseBoard = catchAsync(
 // only for admin
 export const getAllApplications = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const admin = req.user;
-
-		if (!admin || admin.role !== 'admin')
-			return next(new AppError('This is only for admin', 400));
-
 		const applications = await Application.findAll({
-			where: { school: admin.school },
+			where: { school: req.user?.school },
 			attributes: { exclude: ['id'] }
 		});
 
@@ -128,7 +123,7 @@ export const deleteApplication = catchAsync(
 		]);
 
 		if (!user || !application || user.school !== admin.school)
-			return next(new AppError('ERROR: Permission Denied', 400));
+			return next(new AppError('Error: Permission Denied', 400));
 
 		await application.destroy();
 

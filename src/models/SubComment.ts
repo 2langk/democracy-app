@@ -1,12 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType } from './index';
-import User from './User';
+import { dbType, User } from './index';
 
-class Answer extends Model {
+class SubComment extends Model {
 	public id?: number;
 
-	public questionId!: string;
+	public commentId!: string;
 
 	public userId!: string;
 
@@ -19,11 +18,11 @@ class Answer extends Model {
 	public user?: User;
 }
 
-Answer.init(
+SubComment.init(
 	{
-		questionId: {
+		commentId: {
 			allowNull: false,
-			type: DataTypes.UUID
+			type: DataTypes.INTEGER
 		},
 
 		userId: {
@@ -38,16 +37,16 @@ Answer.init(
 	},
 	{
 		sequelize,
-		modelName: 'Answer',
-		tableName: 'answer',
+		modelName: 'SubComment',
+		tableName: 'subComment',
 		charset: 'utf8mb4',
 		collate: 'utf8mb4_general_ci'
 	}
 );
 
 export const associate = (db: dbType): void => {
-	Answer.belongsTo(db.Question, { foreignKey: 'questionId', as: 'question' });
-	Answer.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
+	SubComment.belongsTo(db.Comment, { foreignKey: 'commentId', as: 'comment' });
+	SubComment.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
 };
 
-export default Answer;
+export default SubComment;

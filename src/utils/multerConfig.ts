@@ -41,12 +41,7 @@ export const uploadPledgeImages = multer({
 		bucket: '2langk-s3-bucket/democracy-app/public/image',
 		acl: 'public-read',
 		key(req, file, cb) {
-			cb(
-				null,
-				`pledgeImage-${req.user!.name}-${Date.now()}.${
-					file.mimetype.split('/')[1]
-				}`
-			);
+			cb(null, `pledgeImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
 		}
 	}),
 	fileFilter: imageFilter,
@@ -59,12 +54,7 @@ export const uploadUserPhoto = multer({
 		bucket: '2langk-s3-bucket/democracy-app/public/photo',
 		acl: 'public-read',
 		key(req, file, cb) {
-			cb(
-				null,
-				`userPhoto-${req.user?.name || 'auth'}-${Date.now()}.${
-					file.mimetype.split('/')[1]
-				}`
-			);
+			cb(null, `userPhoto-${Date.now()}.${file.mimetype.split('/')[1]}`);
 		}
 	}),
 	fileFilter: imageFilter,
@@ -77,12 +67,7 @@ export const uploadEduVideo = multer({
 		bucket: '2langk-s3-bucket/democracy-app/public/video',
 		acl: 'public-read',
 		key(req, file, cb) {
-			cb(
-				null,
-				`eduVideo-${req.user!.name}-${Date.now()}.${
-					file.mimetype.split('/')[1]
-				}`
-			);
+			cb(null, `eduVideo-${Date.now()}.${file.mimetype.split('/')[1]}`);
 		}
 	}),
 	fileFilter: videoFilter,

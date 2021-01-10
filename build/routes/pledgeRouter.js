@@ -19,7 +19,7 @@ router
 router
     .route('/:id')
     .get(pledgeController.getOnePledge)
-    .put(pledgeController.voteToPledge) // for every user(same school)
+    .put(authController_1.restrictTo('student', 'candidate', 'president'), pledgeController.voteToPledge) // for every user(same school)
     .patch(authController_1.restrictTo('candidate'), multerConfig_1.uploadPledgeImages.array('images'), pledgeController.updatePledge)
     .delete(authController_1.restrictTo('candidate', 'admin'), pledgeController.deletePledge);
 exports.default = router;
