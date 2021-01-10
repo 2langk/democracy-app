@@ -1,11 +1,13 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from './sequelize';
-import { dbType, User, Answer } from './index';
+import { dbType, User, Comment } from './index';
 
-class Question extends Model {
+class Post extends Model {
 	public id!: string;
 
 	public userId!: string;
+
+	public category!: string;
 
 	public title!: string;
 
@@ -13,16 +15,22 @@ class Question extends Model {
 
 	public school!: string;
 
+	public video?: string;
+
+	public viewCount!: number;
+
 	public readonly createdAt!: Date;
 
 	public readonly updatedAt!: Date;
 
 	public user?: User;
 
-	public answer?: Answer[];
+	public comment?: Comment[];
+
+	public commentCount?: number;
 }
 
-Question.init(
+Post.init(
 	{
 		id: {
 			allowNull: false,
@@ -34,6 +42,14 @@ Question.init(
 		userId: {
 			allowNull: false,
 			type: DataTypes.UUID
+		},
+
+		category: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				isIn: [['debate', 'edu']]
+			}
 		},
 
 		title: {
@@ -52,20 +68,32 @@ Question.init(
 			validate: {
 				len: [2, 8]
 			}
+		},
+
+		video: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 'no'
+		},
+
+		viewCount: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 0
 		}
 	},
 	{
 		sequelize,
-		modelName: 'Question',
-		tableName: 'question',
+		modelName: 'Post',
+		tableName: 'post',
 		charset: 'utf8mb4',
 		collate: 'utf8mb4_general_ci'
 	}
 );
 
 export const associate = (db: dbType): void => {
-	Question.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
-	Question.hasMany(db.Answer, { foreignKey: 'questionId', as: 'answer' });
+	Post.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
+	Post.hasMany(db.Comment, { foreignKey: 'postId', as: 'comment' });
 };
 
-export default Question;
+export default Post;

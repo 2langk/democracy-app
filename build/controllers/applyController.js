@@ -18,10 +18,10 @@ exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     const { user } = req;
     const admin = yield models_1.User.findOne({ where: { role: 'admin' } });
     if (!admin || admin.schoolClass !== 'open') {
-        return next(new AppError_1.default('Error: Permission Denied', 400));
+        return next(new AppError_1.default('Error: 입후보 신청 기간이 아닙니다.', 400));
     }
     if (!user || !title)
-        return next(new AppError_1.default('Cannot find user or title', 400));
+        return next(new AppError_1.default('Error: 잘못된 접근입니다.', 400));
     const newApply = yield models_1.Application.create({
         userId: user.id,
         school: user.school,
@@ -46,11 +46,9 @@ exports.openOrCloseBoard = catchAsync_1.default((req, res, next) => __awaiter(vo
 }));
 // only for admin
 exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const admin = req.user;
-    if (!admin || admin.role !== 'admin')
-        return next(new AppError_1.default('This is only for admin', 400));
+    var _a;
     const applications = yield models_1.Application.findAll({
-        where: { school: admin.school },
+        where: { school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school },
         attributes: { exclude: ['id'] }
     });
     res.status(201).json({
@@ -99,7 +97,7 @@ exports.deleteApplication = catchAsync_1.default((req, res, next) => __awaiter(v
         applicationPromise
     ]);
     if (!user || !application || user.school !== admin.school)
-        return next(new AppError_1.default('ERROR: Permission Denied', 400));
+        return next(new AppError_1.default('Error: Permission Denied', 400));
     yield application.destroy();
     res.status(201).json({
         status: 'success'

@@ -203,6 +203,10 @@ export const voteReset = catchAsync(
 			attributes: { exclude: ['voteCount'] }
 		});
 
+		if (pledges[0].canVote) {
+			return next(new AppError('Error: 투표를 먼저 종료하세요!', 400));
+		}
+
 		const pledgesPromise = pledges.map((pledge) => {
 			// eslint-disable-next-line no-param-reassign
 			pledge.canVote = false;

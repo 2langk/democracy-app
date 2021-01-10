@@ -26,7 +26,10 @@ router
 router
 	.route('/:id')
 	.get(pledgeController.getOnePledge)
-	.put(pledgeController.voteToPledge) // for every user(same school)
+	.put(
+		restrictTo('student', 'candidate', 'president'),
+		pledgeController.voteToPledge
+	) // for every user(same school)
 	.patch(
 		restrictTo('candidate'),
 		uploadPledgeImages.array('images'),

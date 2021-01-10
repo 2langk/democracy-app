@@ -85,14 +85,15 @@ exports.login = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
-    const expire = process.env.JWT_COOKIE_EXPIRES_IN || 1;
-    const cookieOptions = {
-        expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
-        httpOnly: true
-        // secure: process.env.NODE_ENV === 'production'
-    };
+    // const expire =
+    // 	((process.env.JWT_COOKIE_EXPIRES_IN as unknown) as number) || 1;
+    // const cookieOptions = {
+    // 	expires: new Date(Date.now() + expire * 24 * 60 * 60 * 1000),
+    // 	httpOnly: true
+    // 	// secure: process.env.NODE_ENV === 'production'
+    // };
     user.password = undefined;
-    res.cookie('jwt', token, cookieOptions);
+    // res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
         status: 'success',
         user,
@@ -111,7 +112,7 @@ exports.protect = catchAsync_1.default((req, res, next) => __awaiter(void 0, voi
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const currentUser = yield models_1.User.findByPk(decode.id);
     if (!currentUser || !currentUser.isAuth)
-        return next(new AppError_1.default('ERROR: Please Login', 400));
+        return next(new AppError_1.default('ERROR: 미인증된 사용자입니다.', 400));
     // if (currentUser.isChangePassword(iat)) {
     // 	return next(new AppError('ERROR: password changed.', 401));
     // }
@@ -130,7 +131,7 @@ exports.logout = catchAsync_1.default((req, res, next) => __awaiter(void 0, void
         httpOnly: true
         // secure: process.env.NODE_ENV === 'production'
     };
-    res.cookie('jwt', token, cookieOptions);
+    res.cookie('jwt', 'hi', cookieOptions);
     res.status(200).json({
         status: 'success',
         token
@@ -167,6 +168,8 @@ exports.authStudent = catchAsync_1.default((req, res, next) => __awaiter(void 0,
     student.isAuth = true;
     student.photo = 'default';
     yield student.save();
+    // const email = new Email(student);
+    // await email.sendWelcome();
     res.status(200).json({
         status: 'success',
         student

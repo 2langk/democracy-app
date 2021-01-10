@@ -150,8 +150,9 @@ export const associate = (db: dbType): void => {
 	User.hasOne(db.Pledge, { foreignKey: 'candidateId', as: 'pledge' });
 	User.hasOne(db.Application, { foreignKey: 'userId', as: 'application' });
 	User.hasMany(db.Evalutation, { foreignKey: 'presidentId', as: 'evaluation' });
-	User.hasMany(db.Question, { foreignKey: 'userId', as: 'question' });
-	User.hasMany(db.Answer, { foreignKey: 'userId', as: 'answer' });
+	User.hasMany(db.Post, { foreignKey: 'userId', as: 'post' });
+	User.hasMany(db.Comment, { foreignKey: 'userId', as: 'comment' });
+	User.hasMany(db.SubComment, { foreignKey: 'userId', as: 'subComment' });
 };
 
 export default User;

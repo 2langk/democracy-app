@@ -7,11 +7,14 @@ export default class Email {
 
 	public name: string;
 
+	public school: string;
+
 	public from: string;
 
 	constructor(user: User) {
 		this.to = user.email;
 		this.name = user.name;
+		this.school = user.school;
 		this.from = `Democra;SEE-관리자`;
 	}
 
@@ -28,13 +31,13 @@ export default class Email {
 
 	async sendWelcome(): Promise<any> {
 		const html = await ejs.renderFile('./email/welcome.ejs', {
-			name: this.name
+			school: this.name
 		});
 
 		const mailOptions = {
 			from: this.from,
 			to: this.to,
-			subject: '회원가입 신청이 승인 되었습니다',
+			subject: '<Democra; SEE> 회원가입 신청이 승인 되었습니다',
 			text: 'Hello',
 			html
 		};
