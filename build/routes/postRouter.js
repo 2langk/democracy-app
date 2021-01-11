@@ -9,7 +9,7 @@ router.use(authController_1.protect);
 router
     .route('/')
     .get(postController.getAllPost)
-    .post(multerConfig_1.uploadEduVideo.single('video'), postController.createPost);
+    .post(multerConfig_1.uploadPostFile.fields([{ name: 'images' }, { name: 'video' }]), postController.createPost);
 router
     .route('/:id')
     .get(postController.getOnePost)

@@ -15,6 +15,8 @@ class Post extends Model {
 
 	public school!: string;
 
+	public image?: string | string[];
+
 	public video?: string;
 
 	public viewCount!: number;
@@ -68,6 +70,12 @@ Post.init(
 			validate: {
 				len: [2, 8]
 			}
+		},
+
+		image: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 'no'
 		},
 
 		video: {

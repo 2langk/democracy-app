@@ -17,6 +17,7 @@ router.use(restrictTo('admin'));
 
 router
 	.route('/:id')
+	.get(applyController.getOneApplication)
 	.post(applyController.permitApplication)
 	.delete(applyController.deleteApplication);
 

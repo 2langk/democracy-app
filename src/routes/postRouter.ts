@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { uploadEduVideo } from '../utils/multerConfig';
+import { uploadPostFile } from '../utils/multerConfig';
 import { protect } from '../controllers/authController';
 import * as postController from '../controllers/postController';
 
@@ -10,7 +10,10 @@ router.use(protect);
 router
 	.route('/')
 	.get(postController.getAllPost)
-	.post(uploadEduVideo.single('video'), postController.createPost);
+	.post(
+		uploadPostFile.fields([{ name: 'images' }, { name: 'video' }]),
+		postController.createPost
+	);
 
 router
 	.route('/:id')

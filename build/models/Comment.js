@@ -28,6 +28,7 @@ Comment.init({
 const associate = (db) => {
     Comment.belongsTo(db.Post, { foreignKey: 'postId', as: 'post' });
     Comment.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });
+    Comment.hasMany(db.SubComment, { foreignKey: 'commentId', as: 'subComment' });
 };
 exports.associate = associate;
 exports.default = Comment;
