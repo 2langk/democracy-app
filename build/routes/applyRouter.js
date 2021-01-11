@@ -14,6 +14,7 @@ router
 router.use(authController_1.restrictTo('admin'));
 router
     .route('/:id')
+    .get(applyController.getOneApplication)
     .post(applyController.permitApplication)
     .delete(applyController.deleteApplication);
 exports.default = router;

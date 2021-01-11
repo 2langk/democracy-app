@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteApplication = exports.permitApplication = exports.getAllApplications = exports.openOrCloseBoard = exports.createApplication = void 0;
+exports.deleteApplication = exports.permitApplication = exports.getOneApplication = exports.getAllApplications = exports.openOrCloseBoard = exports.createApplication = void 0;
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
 const AppError_1 = require("../utils/AppError");
 exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title } = req.body;
+    const { title, content } = req.body;
     const { user } = req;
     const admin = yield models_1.User.findOne({ where: { role: 'admin' } });
     if (!admin || admin.schoolClass !== 'open') {
@@ -25,7 +25,8 @@ exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     const newApply = yield models_1.Application.create({
         userId: user.id,
         school: user.school,
-        title
+        title,
+        content
     });
     res.status(201).json({
         status: 'success',
@@ -44,7 +45,6 @@ exports.openOrCloseBoard = catchAsync_1.default((req, res, next) => __awaiter(vo
         isOpen: admin.schoolClass
     });
 }));
-// only for admin
 exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const applications = yield models_1.Application.findAll({
@@ -54,6 +54,18 @@ exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(
     res.status(201).json({
         status: 'success',
         applications
+    });
+}));
+// only for admin
+exports.getOneApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    const application = yield models_1.Application.findAll({
+        where: { school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, userId: req.params.id },
+        attributes: { exclude: ['id'] }
+    });
+    res.status(201).json({
+        status: 'success',
+        application
     });
 }));
 exports.permitApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

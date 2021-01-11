@@ -22,8 +22,12 @@ Application.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1, 10]
+            len: [1, 20]
         }
+    },
+    content: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
     },
     isConclude: {
         type: sequelize_1.DataTypes.BOOLEAN,

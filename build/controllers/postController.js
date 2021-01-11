@@ -18,10 +18,17 @@ exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     const { school, id } = req.user;
     if (category === 'edu' && req.user.role !== 'admin')
         return next(new AppError_1.default('Error: Permission Denied', 400));
+    const uploads = req.files;
+    let image = '';
     let video = '';
-    if (req.file) {
+    if (uploads.images) {
+        uploads.images.forEach((i) => {
+            image += `${i.location.split('public/')[1]},`;
+        });
+    }
+    if (uploads.video) {
         // eslint-disable-next-line prefer-destructuring
-        video = req.file.location.split('public/')[1];
+        video = uploads.video[0].location.split('public/')[1];
     }
     const newPost = yield models_1.Post.create({
         title,
@@ -29,6 +36,7 @@ exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
         school,
         category,
         video,
+        image,
         userId: id
     });
     if (!newPost)
@@ -157,16 +165,17 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     }
     if (!post)
         return next(new AppError_1.default('Error: Cannot find post', 400));
-    // if (post.video === '') post.video = undefined;
-    (_a = post === null || post === void 0 ? void 0 : post.comment) === null || _a === void 0 ? void 0 : _a.forEach((a) => {
+    (_a = post === null || post === void 0 ? void 0 : post.comment) === null || _a === void 0 ? void 0 : _a.forEach((b) => {
         var _a;
         // eslint-disable-next-line no-param-reassign
-        if ((_a = a.user) === null || _a === void 0 ? void 0 : _a.password) {
-            a.user.password = undefined;
+        if ((_a = b.user) === null || _a === void 0 ? void 0 : _a.password) {
+            b.user.password = undefined;
         }
     });
     post.viewCount += 1;
     yield post.save();
+    post.image = post.image.split(',');
+    post.image.pop();
     res.status(201).json({
         status: 'success',
         post
