@@ -19,7 +19,10 @@ router
 	.route('/:id')
 	.get(postController.getOnePost)
 	.post(postController.createComment)
-	.patch(postController.updatePost)
+	.patch(
+		uploadPostFile.fields([{ name: 'images' }, { name: 'video' }]),
+		postController.updatePost
+	)
 	.delete(postController.deletePost);
 
 router

@@ -123,7 +123,9 @@ export const getOnePost = catchAsync(
 
 		const isAnonymous = admin.isVote;
 
-		let post = await Post.findByPk(req.params.id);
+		let post;
+
+		post = await Post.findByPk(req.params.id);
 
 		if (isAnonymous || post?.category === 'debate') {
 			post = await Post.findByPk(req.params.id, {
@@ -163,7 +165,7 @@ export const getOnePost = catchAsync(
 							{
 								model: SubComment,
 								as: 'subComment',
-								attributes: ['content, updatedAt'],
+								attributes: ['content', 'updatedAt'],
 								include: [
 									{
 										model: User,
@@ -207,15 +209,37 @@ export const updatePost = catchAsync(
 		if (!title || !content)
 			return next(new AppError('Error: please check title, content', 400));
 
+		const uploads = req.files as {
+			images: Express.Multer.File[];
+			video: Express.Multer.File[];
+		};
+
+		let image = '';
+		let video = '';
+
+		if (uploads.images) {
+			uploads.images.forEach((i) => {
+				image += `${i!.location!.split('public/')[1]},`;
+			});
+		}
+
+		if (uploads.video) {
+			// eslint-disable-next-line prefer-destructuring
+			video = uploads.video[0].location!.split('public/')[1];
+		}
+
 		const post = await Post.findByPk(req.params.id, {
 			include: { model: User, as: 'user' }
 		});
 
-		if (post!.userId !== req.user!.id)
+		if (!post || post!.userId !== req.user!.id)
 			return next(new AppError('Error: permission Denied', 400));
 
-		post!.title = title;
-		post!.content = content;
+		post.title = title;
+		post.content = content;
+		post.image = image === '' ? post.image : image;
+		post.video = video === '' ? post.video : video;
+		await post.save();
 
 		res.status(201).json({
 			status: 'success',

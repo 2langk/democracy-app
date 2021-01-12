@@ -6,8 +6,7 @@ import * as helmet from 'helmet';
 import * as compression from 'compression';
 import * as cors from 'cors';
 import * as xss from 'xss-clean';
-
-import { sequelize } from './models';
+import { sequelize, redisClient } from './models';
 import globalErrorHandler from './utils/globalErrorHandler';
 import AppError from './utils/AppError';
 
@@ -32,7 +31,7 @@ app.use(helmet());
 // Limit requests from same API
 app.use(
 	rateLimit({
-		max: 100,
+		max: 10000,
 		windowMs: 60 * 60 * 1000,
 		message: 'Too many requests!'
 	})
@@ -66,6 +65,8 @@ sequelize
 	.sync({ force: false })
 	.then(() => console.log('DB Connected! :: TABLE SYNC'))
 	.catch(() => console.log('ERROR: DB Connect'));
+
+redisClient.on('connect', () => console.log('Redis Connected!'));
 
 const PORT = process.env.PORT || 3000;
 

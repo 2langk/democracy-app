@@ -1,4 +1,6 @@
 import { Sequelize } from 'sequelize';
+import { createClient as redisCreateClient } from 'redis';
+
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: './config.env' });
@@ -15,3 +17,8 @@ const sequelize = new Sequelize(DB, USER, PASSWORD, {
 });
 
 export default sequelize;
+
+export const redisClient = redisCreateClient({
+	host: '127.0.0.1',
+	port: 6379
+});
