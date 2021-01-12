@@ -59,7 +59,7 @@ exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(
 // only for admin
 exports.getOneApplication = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
-    const application = yield models_1.Application.findAll({
+    const application = yield models_1.Application.findOne({
         where: { school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, userId: req.params.id },
         attributes: { exclude: ['id'] }
     });

@@ -42,27 +42,50 @@ exports.createPledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         school: req.user.school,
         candidateId: req.user.id
     });
+    if (yield models_1.Redis.getCache(req.user.school)) {
+        models_1.Redis.deleteCache(req.user.school);
+    }
     res.status(200).json({
         status: 'success',
         newPledge
     });
 }));
 exports.getAllPledges = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const cache = yield models_1.Redis.getCache(req.user.school);
+    if (cache) {
+        return res.status(200).json({
+            status: 'success',
+            pledges: JSON.parse(cache),
+            isCache: true
+        });
+    }
     const pledges = yield models_1.Pledge.findAll({
         where: { school: req.user.school },
         attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
         include: {
             model: models_1.User,
             as: 'candidate',
-            attributes: { exclude: ['password', 'email', 'role'] }
+            attributes: ['name', 'photo', 'school']
         }
     });
+    yield models_1.Redis.setCache(req.user.school, 100, JSON.stringify(pledges));
     res.status(200).json({
         status: 'success',
         pledges
     });
 }));
 exports.getOnePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let cache = yield models_1.Redis.getCache(req.params.id);
+    if (cache) {
+        cache = JSON.parse(cache);
+        if (cache.school !== req.user.school)
+            return next(new AppError_1.default('Error: Permisison Denied!', 400));
+        return res.status(200).json({
+            status: 'success',
+            pledge: cache,
+            isCache: true
+        });
+    }
     const pledge = yield models_1.Pledge.findOne({
         where: { school: req.user.school, candidateId: req.params.id },
         include: { model: models_1.User, as: 'candidate' },
@@ -72,6 +95,7 @@ exports.getOnePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         return next(new AppError_1.default('ERROR: Cannot find pledge', 400));
     pledge.image = pledge.image.split(',');
     pledge.image.pop();
+    yield models_1.Redis.setCache(pledge.candidateId, 100, JSON.stringify(pledge));
     res.status(200).json({
         status: 'success',
         pledge
@@ -121,6 +145,7 @@ exports.updatePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
     const _c = pledge.toJSON(), { id } = _c, update = __rest(_c, ["id"]);
     update.image = update.image.split(',');
     update.image.pop();
+    models_1.Redis.deleteCache([req.user.school, pledge.candidateId]);
     res.status(200).json({
         status: 'success',
         pledge: update
@@ -137,6 +162,7 @@ exports.deletePledge = catchAsync_1.default((req, res, next) => __awaiter(void 0
         (pledge.candidateId !== req.user.id && req.user.role !== 'admin'))
         return next(new AppError_1.default('ERROR: Permission denied', 400));
     yield pledge.destroy();
+    models_1.Redis.deleteCache([req.user.school, pledge.candidateId]);
     res.status(200).json({
         status: 'success'
     });
@@ -154,8 +180,13 @@ exports.openOrCloseVote = catchAsync_1.default((req, res, next) => __awaiter(voi
         return pledge.save();
     });
     pledges = yield Promise.all(pledgesPromise);
+    const keys = pledges.map((pledge) => {
+        return pledge.candidateId;
+    });
+    models_1.Redis.deleteCache([req.user.school, ...keys]);
     res.status(200).json({
-        status: 'success'
+        status: 'success',
+        canVote: pledges[0].canVote
     });
 }));
 exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

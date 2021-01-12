@@ -22,18 +22,6 @@ const imageFilter = (
 	}
 };
 
-const videoFilter = (
-	req: Request,
-	file: Express.Multer.File,
-	cb: multer.FileFilterCallback
-) => {
-	if (file.mimetype.startsWith('video')) {
-		cb(null, true);
-	} else {
-		cb(new AppError('Please upload only video.', 400));
-	}
-};
-
 const videoOrImageFilter = (
 	req: Request,
 	file: Express.Multer.File,
@@ -42,7 +30,7 @@ const videoOrImageFilter = (
 	if (file.mimetype.startsWith('video') || file.mimetype.startsWith('image')) {
 		cb(null, true);
 	} else {
-		cb(new AppError('Please upload only video.', 400));
+		cb(new AppError('Please upload only video or image.', 400));
 	}
 };
 
@@ -54,19 +42,6 @@ export const uploadPledgeImages = multer({
 		acl: 'public-read',
 		key(req, file, cb) {
 			cb(null, `pledgeImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
-		}
-	}),
-	fileFilter: imageFilter,
-	limits: { fileSize: 10 * 1024 * 1024 }
-});
-
-export const uploadPostImages = multer({
-	storage: multerS3({
-		s3: new AWS.S3(),
-		bucket: '2langk-s3-bucket/democracy-app/public/image',
-		acl: 'public-read',
-		key(req, file, cb) {
-			cb(null, `postImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
 		}
 	}),
 	fileFilter: imageFilter,
@@ -86,26 +61,18 @@ export const uploadUserPhoto = multer({
 	limits: { fileSize: 10 * 1024 * 1024 }
 });
 
-export const uploadEduVideo = multer({
-	storage: multerS3({
-		s3: new AWS.S3(),
-		bucket: '2langk-s3-bucket/democracy-app/public/video',
-		acl: 'public-read',
-		key(req, file, cb) {
-			cb(null, `eduVideo-${Date.now()}.${file.mimetype.split('/')[1]}`);
-		}
-	}),
-	fileFilter: videoFilter,
-	limits: { fileSize: 100 * 1024 * 1024 }
-});
-
 export const uploadPostFile = multer({
 	storage: multerS3({
 		s3: new AWS.S3(),
 		bucket: '2langk-s3-bucket/democracy-app/public/posts',
 		acl: 'public-read',
 		key(req, file, cb) {
-			cb(null, `Post-${Date.now()}.${file.mimetype.split('/')[1]}`);
+			cb(
+				null,
+				`${file.mimetype.split('/')[0]}-${Date.now()}.${
+					file.mimetype.split('/')[1]
+				}`
+			);
 		}
 	}),
 	fileFilter: videoOrImageFilter,

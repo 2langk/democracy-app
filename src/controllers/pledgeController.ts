@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Pledge, User } from '../models';
+import { Pledge, User, Redis } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
 
@@ -27,6 +27,10 @@ export const createPledge = catchAsync(
 			candidateId: req.user!.id
 		});
 
+		if (await Redis.getCache(req.user!.school)) {
+			Redis.deleteCache(req.user!.school);
+		}
+
 		res.status(200).json({
 			status: 'success',
 			newPledge
@@ -36,15 +40,27 @@ export const createPledge = catchAsync(
 
 export const getAllPledges = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
+		const cache = await Redis.getCache(req.user!.school);
+
+		if (cache) {
+			return res.status(200).json({
+				status: 'success',
+				pledges: JSON.parse(cache),
+				isCache: true
+			});
+		}
+
 		const pledges = await Pledge.findAll({
 			where: { school: req.user!.school },
 			attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
 			include: {
 				model: User,
 				as: 'candidate',
-				attributes: { exclude: ['password', 'email', 'role'] }
+				attributes: ['name', 'photo', 'school']
 			}
 		});
+
+		await Redis.setCache(req.user!.school, 100, JSON.stringify(pledges));
 
 		res.status(200).json({
 			status: 'success',
@@ -55,6 +71,21 @@ export const getAllPledges = catchAsync(
 
 export const getOnePledge = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
+		let cache: string | Pledge | null = await Redis.getCache(req.params.id);
+
+		if (cache) {
+			cache = JSON.parse(cache as string) as Pledge;
+
+			if (cache.school !== req.user!.school)
+				return next(new AppError('Error: Permisison Denied!', 400));
+
+			return res.status(200).json({
+				status: 'success',
+				pledge: cache,
+				isCache: true
+			});
+		}
+
 		const pledge = await Pledge.findOne({
 			where: { school: req.user!.school, candidateId: req.params.id },
 			include: { model: User, as: 'candidate' },
@@ -66,6 +97,8 @@ export const getOnePledge = catchAsync(
 		pledge.image = (pledge.image as string).split(',');
 
 		pledge.image.pop();
+
+		await Redis.setCache(pledge.candidateId, 100, JSON.stringify(pledge));
 
 		res.status(200).json({
 			status: 'success',
@@ -139,6 +172,8 @@ export const updatePledge = catchAsync(
 
 		update.image.pop();
 
+		Redis.deleteCache([req.user!.school, pledge.candidateId]);
+
 		res.status(200).json({
 			status: 'success',
 			pledge: update
@@ -162,6 +197,8 @@ export const deletePledge = catchAsync(
 			return next(new AppError('ERROR: Permission denied', 400));
 
 		await pledge.destroy();
+
+		Redis.deleteCache([req.user!.school, pledge.candidateId]);
 
 		res.status(200).json({
 			status: 'success'
@@ -187,8 +224,15 @@ export const openOrCloseVote = catchAsync(
 
 		pledges = await Promise.all(pledgesPromise);
 
+		const keys = pledges.map((pledge) => {
+			return pledge.candidateId;
+		});
+
+		Redis.deleteCache([req.user!.school, ...keys]);
+
 		res.status(200).json({
-			status: 'success'
+			status: 'success',
+			canVote: pledges[0].canVote
 		});
 	}
 );

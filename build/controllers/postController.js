@@ -48,6 +48,9 @@ exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
 }));
 exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, category } = req.query;
+    if (typeof page !== 'number' || typeof category !== 'string') {
+        return next(new AppError_1.default('Error: 쿼리문 오류.', 400));
+    }
     const admin = yield models_1.User.findOne({
         where: { role: 'admin', school: req.user.school }
     });
@@ -109,7 +112,8 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     if (!admin)
         return next(new AppError_1.default('Error: 등록되지 않은 학교입니다.', 400));
     const isAnonymous = admin.isVote;
-    let post = yield models_1.Post.findByPk(req.params.id);
+    let post;
+    post = yield models_1.Post.findByPk(req.params.id);
     if (isAnonymous || (post === null || post === void 0 ? void 0 : post.category) === 'debate') {
         post = yield models_1.Post.findByPk(req.params.id, {
             include: [
@@ -149,7 +153,7 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
                         {
                             model: models_1.SubComment,
                             as: 'subComment',
-                            attributes: ['content, updatedAt'],
+                            attributes: ['content', 'updatedAt'],
                             include: [
                                 {
                                     model: models_1.User,
@@ -185,13 +189,28 @@ exports.updatePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     const { title, content } = req.body;
     if (!title || !content)
         return next(new AppError_1.default('Error: please check title, content', 400));
+    const uploads = req.files;
+    let image = '';
+    let video = '';
+    if (uploads.images) {
+        uploads.images.forEach((i) => {
+            image += `${i.location.split('public/')[1]},`;
+        });
+    }
+    if (uploads.video) {
+        // eslint-disable-next-line prefer-destructuring
+        video = uploads.video[0].location.split('public/')[1];
+    }
     const post = yield models_1.Post.findByPk(req.params.id, {
         include: { model: models_1.User, as: 'user' }
     });
-    if (post.userId !== req.user.id)
+    if (!post || post.userId !== req.user.id)
         return next(new AppError_1.default('Error: permission Denied', 400));
     post.title = title;
     post.content = content;
+    post.image = image === '' ? post.image : image;
+    post.video = video === '' ? post.video : video;
+    yield post.save();
     res.status(201).json({
         status: 'success',
         post
