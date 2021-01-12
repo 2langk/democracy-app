@@ -20,7 +20,7 @@ app.use(cors());
 app.use(helmet());
 // Limit requests from same API
 app.use(rateLimit({
-    max: 100,
+    max: 10000,
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests!'
 }));
@@ -48,5 +48,6 @@ models_1.sequelize
     .sync({ force: false })
     .then(() => console.log('DB Connected! :: TABLE SYNC'))
     .catch(() => console.log('ERROR: DB Connect'));
+models_1.redisClient.on('connect', () => console.log('Redis Connected!'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

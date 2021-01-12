@@ -19,6 +19,9 @@ const sequelize = new Sequelize(DB, USER, PASSWORD, {
 export default sequelize;
 
 export const redisClient = redisCreateClient({
-	host: '127.0.0.1',
+	host:
+		process.env.NODE_ENV === 'production'
+			? 'host.docker.internal'
+			: '127.0.0.1',
 	port: 6379
 });

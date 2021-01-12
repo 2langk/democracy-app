@@ -51,7 +51,11 @@ export const createPost = catchAsync(
 
 export const getAllPost = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { page, category } = req.query as { page: number; category: string };
+		const { page, category } = req.query;
+
+		if (typeof page !== 'number' || typeof category !== 'string') {
+			return next(new AppError('Error: 쿼리문 오류.', 400));
+		}
 
 		const admin = await User.findOne({
 			where: { role: 'admin', school: req.user!.school }

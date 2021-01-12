@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubComment = exports.Comment = exports.Post = exports.Pledge = exports.Evalutation = exports.Application = exports.User = exports.sequelize = void 0;
+exports.SubComment = exports.Comment = exports.Post = exports.Pledge = exports.Evalutation = exports.Application = exports.User = exports.Redis = exports.redisClient = exports.sequelize = void 0;
+const util_1 = require("util");
 const User_1 = require("./User");
 exports.User = User_1.default;
 const Application_1 = require("./Application");
@@ -17,6 +18,14 @@ const SubComment_1 = require("./SubComment");
 exports.SubComment = SubComment_1.default;
 const sequelize_1 = require("./sequelize");
 exports.sequelize = sequelize_1.default;
+Object.defineProperty(exports, "redisClient", { enumerable: true, get: function () { return sequelize_1.redisClient; } });
+const Redis = {
+    getCache: util_1.promisify(sequelize_1.redisClient.get).bind(sequelize_1.redisClient),
+    setCache: util_1.promisify(sequelize_1.redisClient.setex).bind(sequelize_1.redisClient),
+    deleteCache: sequelize_1.redisClient.del.bind(sequelize_1.redisClient),
+    checkCache: sequelize_1.redisClient.exists.bind(sequelize_1.redisClient)
+};
+exports.Redis = Redis;
 const db = {
     User: User_1.default,
     Application: Application_1.default,
