@@ -51,11 +51,7 @@ export const createPost = catchAsync(
 
 export const getAllPost = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { page, category } = req.query;
-
-		if (typeof page !== 'number' || typeof category !== 'string') {
-			return next(new AppError('Error: 쿼리문 오류.', 400));
-		}
+		const { page, category } = req.query as { page: string; category: string };
 
 		const admin = await User.findOne({
 			where: { role: 'admin', school: req.user!.school }
@@ -79,7 +75,7 @@ export const getAllPost = catchAsync(
 				],
 				order: [['createdAt', 'DESC']],
 				limit: 10,
-				offset: (page - 1) * 10
+				offset: (+page - 1) * 10
 			});
 		} else {
 			posts = await Post.findAll({
@@ -98,7 +94,7 @@ export const getAllPost = catchAsync(
 				],
 				order: [['createdAt', 'DESC']],
 				limit: 10,
-				offset: (page - 1) * 10
+				offset: (+page - 1) * 10
 			});
 		}
 
