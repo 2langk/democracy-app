@@ -64,6 +64,8 @@
     "nodemailer": "^6.4.17",
     "redis": "^3.0.2",
     "sequelize": "^6.3.5",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0",
     "xss-clean": "^0.1.1"
   }
 }

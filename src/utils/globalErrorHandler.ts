@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import AppError from './AppError';
+import logger from './logger';
 
 const sendErrorProd = (err: AppError, req: Request, res: Response) => {
 	if (err.isOperational) {
@@ -40,8 +41,10 @@ const globalErrorHandler = (
 
 	if (process.env.NODE_ENV === 'development') {
 		sendErrorDev(error, req, res);
+		logger.error(error);
 	} else if (process.env.NODE_ENV === 'production') {
 		sendErrorProd(error, req, res);
+		logger.error(error);
 	}
 };
 

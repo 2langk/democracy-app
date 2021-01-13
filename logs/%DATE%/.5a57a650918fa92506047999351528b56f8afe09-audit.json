@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\leelk\\OneDrive\\바탕 화면\\TypeScript\\ts-democracy\\logs\\%DATE%\\.5a57a650918fa92506047999351528b56f8afe09-audit.json",
+    "files": [
+        {
+            "date": 1610522114202,
+            "name": "C:\\Users\\leelk\\OneDrive\\바탕 화면\\TypeScript\\ts-democracy\\logs\\2021-01-13\\exception.log",
+            "hash": "1f393a48869488ffa979ed830a34c8ba"
+        }
+    ]
+}

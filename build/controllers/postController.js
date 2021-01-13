@@ -48,9 +48,6 @@ exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
 }));
 exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, category } = req.query;
-    if (typeof page !== 'number' || typeof category !== 'string') {
-        return next(new AppError_1.default('Error: 쿼리문 오류.', 400));
-    }
     const admin = yield models_1.User.findOne({
         where: { role: 'admin', school: req.user.school }
     });
@@ -70,7 +67,7 @@ exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
             ],
             order: [['createdAt', 'DESC']],
             limit: 10,
-            offset: (page - 1) * 10
+            offset: (+page - 1) * 10
         });
     }
     else {
@@ -90,7 +87,7 @@ exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
             ],
             order: [['createdAt', 'DESC']],
             limit: 10,
-            offset: (page - 1) * 10
+            offset: (+page - 1) * 10
         });
     }
     posts = posts.map((post) => {

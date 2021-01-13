@@ -9,6 +9,7 @@ import * as xss from 'xss-clean';
 import { sequelize, redisClient } from './models';
 import globalErrorHandler from './utils/globalErrorHandler';
 import AppError from './utils/AppError';
+import logger from './utils/logger';
 
 // import Routes
 import {
@@ -40,9 +41,14 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// After body-parser
 app.use(xss());
 app.use(compression());
+
+// custom logger
+app.use((req, res, next) => {
+	logger.info({ message: `Req is to ${req.method} ${req.originalUrl} ` });
+	next();
+});
 
 // routes
 app.get('/', (req, res) => res.send('Hello World!'));

@@ -11,6 +11,7 @@ const xss = require("xss-clean");
 const models_1 = require("./models");
 const globalErrorHandler_1 = require("./utils/globalErrorHandler");
 const AppError_1 = require("./utils/AppError");
+const logger_1 = require("./utils/logger");
 // import Routes
 const routes_1 = require("./routes");
 dotenv.config({ path: './config.env' });
@@ -27,9 +28,13 @@ app.use(rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// After body-parser
 app.use(xss());
 app.use(compression());
+// custom logger
+app.use((req, res, next) => {
+    logger_1.default.info({ message: `Req is to ${req.method} ${req.originalUrl} ` });
+    next();
+});
 // routes
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/auth', routes_1.authRouter);

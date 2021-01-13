@@ -1,0 +1,4 @@
+2021-01-13 16:15:20 [logs] info: Req is to /api/auth/login
+2021-01-13 16:15:20 [logs] error: ERROR: Cannot find user or not auth 
+2021-01-13 16:16:30 [logs] info: Req is to POST /api/auth/login 
+2021-01-13 16:16:30 [logs] error: ERROR: Cannot find user or not auth 

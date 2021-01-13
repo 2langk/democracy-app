@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const logger_1 = require("./logger");
 const sendErrorProd = (err, req, res) => {
     if (err.isOperational) {
         return res.status(err.statusCode).json({
@@ -28,9 +29,11 @@ const globalErrorHandler = (err, req, res, next) => {
     error.status = error.status || 'error';
     if (process.env.NODE_ENV === 'development') {
         sendErrorDev(error, req, res);
+        logger_1.default.error(error);
     }
     else if (process.env.NODE_ENV === 'production') {
         sendErrorProd(error, req, res);
+        logger_1.default.error(error);
     }
 };
 exports.default = globalErrorHandler;
