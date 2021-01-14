@@ -2,7 +2,7 @@
 
 ### Typescript + Express + MySQL(AWS RDS) 기반의 API 서버입니다. 
 
-### 테스트 서버 = AWS EC2 + github action [서버 링크](http://ec2-54-180-120-197.ap-northeast-2.compute.amazonaws.com).
+### 테스트 서버 = AWS EC2 + github action [서버 링크](http://ec2-13-124-175-42.ap-northeast-2.compute.amazonaws.com).
 
 ### API 문서링크 [Postman 문서링크](https://documenter.getpostman.com/view/12302946/TVt1A5V4).
 
@@ -15,8 +15,8 @@
  
  백엔드 개발은 70% 정도 진행되었고 프론트랑 연동도 시작했습니다.  
  
- 테스트 계정 kimt@email.com // 123123
- 회원가입용 학교 = 서울고(학교 이름) // 665(학교 코드)
+ 테스트 계정 kimt@email.com // 123123  
+ 회원가입용 학교 = 서울고 // 665 (학교명 // 코드)
  
 ##### 디렉토리 소개  
  ##### models = DB 모델 + DB 커넥션.  
