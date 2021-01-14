@@ -62,7 +62,13 @@ Application.init(
 		modelName: 'Application',
 		tableName: 'application',
 		charset: 'utf8mb4',
-		collate: 'utf8mb4_general_ci'
+		collate: 'utf8mb4_general_ci',
+		indexes: [
+			{
+				unique: false,
+				fields: ['school']
+			}
+		]
 	}
 );
 

@@ -128,7 +128,13 @@ User.init(
 				where: { isAuth: false },
 				attributes: { exclude: ['password'] }
 			}
-		}
+		},
+		indexes: [
+			{
+				unique: false,
+				fields: ['school']
+			}
+		]
 	}
 );
 
