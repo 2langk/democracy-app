@@ -20,7 +20,7 @@ Post.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         validate: {
-            isIn: [['debate', 'edu']]
+            isIn: [['debate', 'edu', 'notice']]
         }
     },
     title: {
@@ -58,7 +58,13 @@ Post.init({
     modelName: 'Post',
     tableName: 'post',
     charset: 'utf8mb4',
-    collate: 'utf8mb4_general_ci'
+    collate: 'utf8mb4_general_ci',
+    indexes: [
+        {
+            unique: false,
+            fields: ['school']
+        }
+    ]
 });
 const associate = (db) => {
     Post.belongsTo(db.User, { foreignKey: 'userId', as: 'user' });

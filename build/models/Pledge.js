@@ -48,7 +48,13 @@ Pledge.init({
     modelName: 'Pledge',
     tableName: 'pledge',
     charset: 'utf8mb4',
-    collate: 'utf8mb4_general_ci'
+    collate: 'utf8mb4_general_ci',
+    indexes: [
+        {
+            unique: false,
+            fields: ['school']
+        }
+    ]
 });
 const associate = (db) => {
     Pledge.belongsTo(db.User, { foreignKey: 'candidateId', as: 'candidate' });

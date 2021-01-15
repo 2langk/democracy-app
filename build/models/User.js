@@ -102,7 +102,13 @@ User.init({
             where: { isAuth: false },
             attributes: { exclude: ['password'] }
         }
-    }
+    },
+    indexes: [
+        {
+            unique: false,
+            fields: ['school']
+        }
+    ]
 });
 User.beforeSave((user) => __awaiter(void 0, void 0, void 0, function* () {
     if (user.changed('password')) {
