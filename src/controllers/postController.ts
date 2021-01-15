@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { Op } from 'sequelize';
 import { Comment, Post, User, SubComment } from '../models';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/AppError';
@@ -51,22 +52,36 @@ export const createPost = catchAsync(
 
 export const getAllPost = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { page, category } = req.query as { page: string; category: string };
+		const { page, category, searchParam, searchTerm } = req.query as {
+			[fields: string]: string;
+		};
 
 		const admin = await User.findOne({
 			where: { role: 'admin', school: req.user!.school }
 		});
 
 		if (!admin)
-			return next(new AppError('Error: 등록되지 않은 학교입니다.', 400));
-
-		const isAnonymous = admin.isVote;
+			return next(
+				new AppError('Error: 관리자 미확인. 등록되지 않은 학교입니다.', 400)
+			);
 
 		let posts: Post[];
-		if (isAnonymous && category === 'debate') {
+
+		if (searchTerm && searchParam) {
 			posts = await Post.findAll({
-				where: { school: req.user!.school, category },
+				where: {
+					school: req.user!.school,
+					category,
+					[searchParam]: {
+						[Op.like]: `%${searchTerm}%`
+					}
+				},
 				include: [
+					{
+						model: User,
+						as: 'user',
+						attributes: ['name', 'photo', 'schoolClass']
+					},
 					{
 						model: Comment,
 						as: 'comment',
@@ -79,7 +94,10 @@ export const getAllPost = catchAsync(
 			});
 		} else {
 			posts = await Post.findAll({
-				where: { school: req.user!.school, category },
+				where: {
+					school: req.user!.school,
+					category
+				},
 				include: [
 					{
 						model: User,

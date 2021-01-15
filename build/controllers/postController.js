@@ -10,13 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSubComment = exports.updateSubComment = exports.createSubComment = exports.deleteComment = exports.updateComment = exports.createComment = exports.deletePost = exports.updatePost = exports.getOnePost = exports.getAllPost = exports.createPost = void 0;
+const sequelize_1 = require("sequelize");
 const models_1 = require("../models");
 const catchAsync_1 = require("../utils/catchAsync");
 const AppError_1 = require("../utils/AppError");
 exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, content, category } = req.body;
     const { school, id } = req.user;
-    if (category === 'edu' && req.user.role !== 'admin')
+    if (['edu', 'notice'].includes(category) && req.user.role !== 'admin')
         return next(new AppError_1.default('Error: Permission Denied', 400));
     const uploads = req.files;
     let image = '';
@@ -47,18 +48,28 @@ exports.createPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     });
 }));
 exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, category } = req.query;
+    const { page, category, searchParam, searchTerm } = req.query;
     const admin = yield models_1.User.findOne({
         where: { role: 'admin', school: req.user.school }
     });
     if (!admin)
-        return next(new AppError_1.default('Error: 등록되지 않은 학교입니다.', 400));
-    const isAnonymous = admin.isVote;
+        return next(new AppError_1.default('Error: 관리자 미확인. 등록되지 않은 학교입니다.', 400));
     let posts;
-    if (isAnonymous && category === 'debate') {
+    if (searchTerm && searchParam) {
         posts = yield models_1.Post.findAll({
-            where: { school: req.user.school, category },
+            where: {
+                school: req.user.school,
+                category,
+                [searchParam]: {
+                    [sequelize_1.Op.like]: `%${searchTerm}%`
+                }
+            },
             include: [
+                {
+                    model: models_1.User,
+                    as: 'user',
+                    attributes: ['name', 'photo', 'schoolClass']
+                },
                 {
                     model: models_1.Comment,
                     as: 'comment',
@@ -72,7 +83,10 @@ exports.getAllPost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     }
     else {
         posts = yield models_1.Post.findAll({
-            where: { school: req.user.school, category },
+            where: {
+                school: req.user.school,
+                category
+            },
             include: [
                 {
                     model: models_1.User,
