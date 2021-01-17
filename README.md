@@ -46,7 +46,7 @@
   - logger 등  
   
   
-  ##### 배포 계획 = aws ec2 auto scaling   
+  ##### 배포 계획 = aws ec2 auto scaling. 
   - 프론트  
    = nginx(80, 443) + docker container(express, ejs)  
   - 백엔드  
