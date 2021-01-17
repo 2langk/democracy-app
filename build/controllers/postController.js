@@ -122,63 +122,40 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
     });
     if (!admin)
         return next(new AppError_1.default('Error: 등록되지 않은 학교입니다.', 400));
-    const isAnonymous = admin.isVote;
-    let post;
-    post = yield models_1.Post.findByPk(req.params.id);
-    if (isAnonymous || (post === null || post === void 0 ? void 0 : post.category) === 'debate') {
-        post = yield models_1.Post.findByPk(req.params.id, {
-            include: [
-                {
-                    model: models_1.Comment,
-                    as: 'comment',
-                    attributes: ['content', 'updatedAt'],
-                    include: [
-                        {
-                            model: models_1.SubComment,
-                            as: 'subComment',
-                            attributes: ['content', 'updatedAt']
-                        }
-                    ]
-                }
-            ]
-        });
-    }
-    else {
-        post = yield models_1.Post.findByPk(req.params.id, {
-            include: [
-                {
-                    model: models_1.User,
-                    as: 'user',
-                    attributes: ['name', 'schoolClass', 'photo']
-                },
-                {
-                    model: models_1.Comment,
-                    as: 'comment',
-                    attributes: ['content', 'updatedAt'],
-                    include: [
-                        {
-                            model: models_1.User,
-                            as: 'user',
-                            attributes: ['name', 'schoolClass', 'photo']
-                        },
-                        {
-                            model: models_1.SubComment,
-                            as: 'subComment',
-                            attributes: ['content', 'updatedAt'],
-                            include: [
-                                {
-                                    model: models_1.User,
-                                    as: 'user',
-                                    attributes: ['name', 'schoolClass', 'photo']
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        });
-    }
-    if (!post)
+    const post = yield models_1.Post.findByPk(req.params.id, {
+        include: [
+            {
+                model: models_1.User,
+                as: 'user',
+                attributes: ['name', 'schoolClass', 'photo']
+            },
+            {
+                model: models_1.Comment,
+                as: 'comment',
+                attributes: ['id', 'content', 'updatedAt'],
+                include: [
+                    {
+                        model: models_1.User,
+                        as: 'user',
+                        attributes: ['name', 'schoolClass', 'photo']
+                    },
+                    {
+                        model: models_1.SubComment,
+                        as: 'subComment',
+                        attributes: ['id', 'content', 'updatedAt'],
+                        include: [
+                            {
+                                model: models_1.User,
+                                as: 'user',
+                                attributes: ['name', 'schoolClass', 'photo']
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    });
+    if (!post || post.school !== req.user.school)
         return next(new AppError_1.default('Error: Cannot find post', 400));
     (_a = post === null || post === void 0 ? void 0 : post.comment) === null || _a === void 0 ? void 0 : _a.forEach((b) => {
         var _a;

@@ -139,66 +139,42 @@ export const getOnePost = catchAsync(
 		if (!admin)
 			return next(new AppError('Error: 등록되지 않은 학교입니다.', 400));
 
-		const isAnonymous = admin.isVote;
+		const post = await Post.findByPk(req.params.id, {
+			include: [
+				{
+					model: User,
+					as: 'user',
+					attributes: ['name', 'schoolClass', 'photo']
+				},
+				{
+					model: Comment,
+					as: 'comment',
+					attributes: ['id', 'content', 'updatedAt'],
+					include: [
+						{
+							model: User,
+							as: 'user',
+							attributes: ['name', 'schoolClass', 'photo']
+						},
+						{
+							model: SubComment,
+							as: 'subComment',
+							attributes: ['id', 'content', 'updatedAt'],
+							include: [
+								{
+									model: User,
+									as: 'user',
+									attributes: ['name', 'schoolClass', 'photo']
+								}
+							]
+						}
+					]
+				}
+			]
+		});
 
-		let post;
-
-		post = await Post.findByPk(req.params.id);
-
-		if (isAnonymous || post?.category === 'debate') {
-			post = await Post.findByPk(req.params.id, {
-				include: [
-					{
-						model: Comment,
-						as: 'comment',
-						attributes: ['content', 'updatedAt'],
-						include: [
-							{
-								model: SubComment,
-								as: 'subComment',
-								attributes: ['content', 'updatedAt']
-							}
-						]
-					}
-				]
-			});
-		} else {
-			post = await Post.findByPk(req.params.id, {
-				include: [
-					{
-						model: User,
-						as: 'user',
-						attributes: ['name', 'schoolClass', 'photo']
-					},
-					{
-						model: Comment,
-						as: 'comment',
-						attributes: ['content', 'updatedAt'],
-						include: [
-							{
-								model: User,
-								as: 'user',
-								attributes: ['name', 'schoolClass', 'photo']
-							},
-							{
-								model: SubComment,
-								as: 'subComment',
-								attributes: ['content', 'updatedAt'],
-								include: [
-									{
-										model: User,
-										as: 'user',
-										attributes: ['name', 'schoolClass', 'photo']
-									}
-								]
-							}
-						]
-					}
-				]
-			});
-		}
-
-		if (!post) return next(new AppError('Error: Cannot find post', 400));
+		if (!post || post.school !== req.user!.school)
+			return next(new AppError('Error: Cannot find post', 400));
 
 		post?.comment?.forEach((b: Comment) => {
 			// eslint-disable-next-line no-param-reassign
