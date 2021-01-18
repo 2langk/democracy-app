@@ -68,6 +68,11 @@ export const getOneApplication = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const application = await Application.findOne({
 			where: { school: req.user?.school, userId: req.params.id },
+			include: {
+				model: User,
+				as: 'user',
+				attributes: ['name', 'school', 'photo']
+			},
 			attributes: { exclude: ['id'] }
 		});
 
