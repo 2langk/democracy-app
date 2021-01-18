@@ -61,6 +61,11 @@ exports.getOneApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     var _b;
     const application = yield models_1.Application.findOne({
         where: { school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, userId: req.params.id },
+        include: {
+            model: models_1.User,
+            as: 'user',
+            attributes: ['name', 'school', 'photo']
+        },
         attributes: { exclude: ['id'] }
     });
     res.status(201).json({

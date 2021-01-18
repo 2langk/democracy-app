@@ -168,3 +168,7 @@
 2021-01-18 00:45:05 [logs] info: Req is to POST /api/post/fbe0da39-7316-4cb8-95aa-53e8778fa6db/comment/4 
 2021-01-18 00:45:05 [logs] info: Req is to GET /api/user 
 2021-01-18 00:45:05 [logs] info: Req is to GET /api/post/fbe0da39-7316-4cb8-95aa-53e8778fa6db 
+2021-01-18 12:59:04 [logs] info: Req is to GET /api/auth/logout 
+2021-01-18 12:59:08 [logs] info: Req is to POST /api/auth/login 
+2021-01-18 13:18:18 [logs] info: Req is to POST /api/auth/login 
+2021-01-18 13:35:39 [logs] info: Req is to POST /api/auth/login 
