@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadPostFile = exports.uploadUserPhoto = exports.uploadPledgeImages = void 0;
+exports.uploadPostFile = exports.uploadUserPhoto = exports.uploadApplyImages = exports.uploadPledgeImages = void 0;
 const multer = require("multer");
 const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
@@ -34,6 +34,18 @@ exports.uploadPledgeImages = multer({
         acl: 'public-read',
         key(req, file, cb) {
             cb(null, `pledgeImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
+        }
+    }),
+    fileFilter: imageFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+});
+exports.uploadApplyImages = multer({
+    storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: '2langk-s3-bucket/democracy-app/public/image',
+        acl: 'public-read',
+        key(req, file, cb) {
+            cb(null, `applyImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
         }
     }),
     fileFilter: imageFilter,

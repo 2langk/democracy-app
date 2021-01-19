@@ -13,6 +13,8 @@ class Application extends Model {
 
 	public content!: string;
 
+	public image!: string | string[];
+
 	public isConclude!: boolean;
 
 	public readonly createdAt!: Date;
@@ -47,6 +49,11 @@ Application.init(
 		},
 
 		content: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+
+		image: {
 			type: DataTypes.STRING,
 			allowNull: false
 		},

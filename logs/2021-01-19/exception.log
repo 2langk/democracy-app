@@ -1,0 +1,114 @@
+2021-01-19 20:55:37 [logs] error: uncaughtException: Redis connection to 127.0.0.1:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
+Error: Redis connection to 127.0.0.1:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1141:16)
+2021-01-19 20:55:40 [logs] error: uncaughtException: Redis connection to 127.0.0.1:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
+Error: Redis connection to 127.0.0.1:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1141:16)
+2021-01-19 21:27:34 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m21[0m:[93m7[0m - [91merror[0m[90m TS2488: [0mType '{ [fieldname: string]: File[]; } | File[]' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+[7m21[0m  	[...req.files].forEach(() => {});
+[7m  [0m [91m 	    ~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m21[0m:[93m7[0m - [91merror[0m[90m TS2488: [0mType '{ [fieldname: string]: File[]; } | File[]' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+[7m21[0m  	[...req.files].forEach(() => {});
+[7m  [0m [91m 	    ~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-01-19 21:28:33 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m20[0m:[93m37[0m - [91merror[0m[90m TS2304: [0mCannot find name 'File'.
+
+[7m20[0m  	const upload = req.files as Array<File>;
+[7m  [0m [91m 	                                  ~~~~[0m
+[96msrc/controllers/applyController.ts[0m:[93m22[0m:[93m7[0m - [91merror[0m[90m TS2488: [0mType '{ [fieldname: string]: File[]; } | File[]' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+[7m22[0m  	[...req.files].forEach(() => {});
+[7m  [0m [91m 	    ~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m20[0m:[93m37[0m - [91merror[0m[90m TS2304: [0mCannot find name 'File'.
+
+[7m20[0m  	const upload = req.files as Array<File>;
+[7m  [0m [91m 	                                  ~~~~[0m
+[96msrc/controllers/applyController.ts[0m:[93m22[0m:[93m7[0m - [91merror[0m[90m TS2488: [0mType '{ [fieldname: string]: File[]; } | File[]' must have a '[Symbol.iterator]()' method that returns an iterator.
+
+[7m22[0m  	[...req.files].forEach(() => {});
+[7m  [0m [91m 	    ~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-01-19 21:34:01 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m92[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'split' does not exist on type 'string | string[]'.
+  Property 'split' does not exist on type 'string[]'.
+
+[7m92[0m  	const image = application?.image.split(',');
+[7m  [0m [91m 	                                 ~~~~~[0m
+[96msrc/controllers/applyController.ts[0m:[93m95[0m:[93m3[0m - [91merror[0m[90m TS2531: [0mObject is possibly 'null'.
+
+[7m95[0m  	application.image = image;
+[7m  [0m [91m 	~~~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m92[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'split' does not exist on type 'string | string[]'.
+  Property 'split' does not exist on type 'string[]'.
+
+[7m92[0m  	const image = application?.image.split(',');
+[7m  [0m [91m 	                                 ~~~~~[0m
+[96msrc/controllers/applyController.ts[0m:[93m95[0m:[93m3[0m - [91merror[0m[90m TS2531: [0mObject is possibly 'null'.
+
+[7m95[0m  	application.image = image;
+[7m  [0m [91m 	~~~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-01-19 21:34:23 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m95[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'split' does not exist on type 'string | string[]'.
+  Property 'split' does not exist on type 'string[]'.
+
+[7m95[0m  	const image = application?.image.split(',');
+[7m  [0m [91m 	                                 ~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/applyController.ts[0m:[93m95[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'split' does not exist on type 'string | string[]'.
+  Property 'split' does not exist on type 'string[]'.
+
+[7m95[0m  	const image = application?.image.split(',');
+[7m  [0m [91m 	                                 ~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)

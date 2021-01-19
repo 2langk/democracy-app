@@ -29,6 +29,10 @@ Application.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
+    image: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
     isConclude: {
         type: sequelize_1.DataTypes.BOOLEAN,
         allowNull: false,

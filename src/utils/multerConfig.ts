@@ -48,6 +48,19 @@ export const uploadPledgeImages = multer({
 	limits: { fileSize: 10 * 1024 * 1024 }
 });
 
+export const uploadApplyImages = multer({
+	storage: multerS3({
+		s3: new AWS.S3(),
+		bucket: '2langk-s3-bucket/democracy-app/public/image',
+		acl: 'public-read',
+		key(req, file, cb) {
+			cb(null, `applyImage-${Date.now()}.${file.mimetype.split('/')[1]}`);
+		}
+	}),
+	fileFilter: imageFilter,
+	limits: { fileSize: 10 * 1024 * 1024 }
+});
+
 export const uploadUserPhoto = multer({
 	storage: multerS3({
 		s3: new AWS.S3(),

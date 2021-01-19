@@ -149,7 +149,7 @@ export const getOnePost = catchAsync(
 				{
 					model: Comment,
 					as: 'comment',
-					attributes: ['id', 'content', 'updatedAt'],
+					attributes: ['id', 'content', 'updatedAt', 'userId'],
 					include: [
 						{
 							model: User,
@@ -159,7 +159,7 @@ export const getOnePost = catchAsync(
 						{
 							model: SubComment,
 							as: 'subComment',
-							attributes: ['id', 'content', 'updatedAt'],
+							attributes: ['id', 'content', 'updatedAt', 'userId'],
 							include: [
 								{
 									model: User,

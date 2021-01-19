@@ -1,0 +1,33 @@
+2021-01-19 21:11:39 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:11:43 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:12:10 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:12:20 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:14:08 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:14:17 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:15:18 [logs] error: ERROR: Permission denied. This is only for admin
+2021-01-19 21:23:07 [logs] error: notNull Violation: Application.image cannot be null
+2021-01-19 21:24:50 [logs] error: ERROR: 미인증된 사용자입니다.
+2021-01-19 21:26:03 [logs] error: Error: 입후보 신청 기간이 아닙니다.
+2021-01-19 21:26:34 [logs] error: notNull Violation: Application.image cannot be null
+2021-01-19 21:35:19 [logs] error: Validation error
+2021-01-19 21:38:48 [logs] error: ERROR: 미인증된 사용자입니다.
+2021-01-19 21:38:55 [logs] error: ERROR: 미인증된 사용자입니다.
+2021-01-19 21:39:02 [logs] error: ERROR: 미인증된 사용자입니다.
+2021-01-19 21:58:04 [logs] error: ERROR: Please Login
+2021-01-19 21:59:02 [logs] error: Error: 잘못된 접근입니다.
+2021-01-19 21:59:13 [logs] error: Error: 잘못된 접근입니다.
+2021-01-19 22:00:59 [logs] error: ERROR: Permission Denied
+2021-01-19 22:16:46 [logs] error: ERROR: Cannot find pledge
+2021-01-19 22:17:23 [logs] error: ERROR: Cannot find pledge
+2021-01-19 22:32:06 [logs] error: ERROR: Please Login
+2021-01-19 22:32:33 [logs] error: Can't find URL on this server!
+2021-01-19 22:41:36 [logs] error: Error: Cannot find post
+2021-01-19 22:43:34 [logs] error: Error: permission Denied
+2021-01-19 22:44:13 [logs] error: Can't find URL on this server!
+2021-01-19 22:44:25 [logs] error: Error: permission Denied
+2021-01-19 22:47:32 [logs] error: Can't find URL on this server!
+2021-01-19 22:48:15 [logs] error: Error: Permission Denied
+2021-01-19 22:48:31 [logs] error: Error: permission Denied
+2021-01-19 22:55:49 [logs] error: ERROR: Cannot find user.
+2021-01-19 22:56:06 [logs] error: Error: please pass your comment
+2021-01-19 23:02:45 [logs] error: ERROR: Permission denied. This is only for student,candidate,president

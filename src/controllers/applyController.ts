@@ -15,11 +15,19 @@ export const createApplication = catchAsync(
 		if (!user || !title)
 			return next(new AppError('Error: 잘못된 접근입니다.', 400));
 
+		let image = '';
+		const upload = req.files as Array<Express.Multer.File>;
+
+		upload.forEach((file) => {
+			image += `${file.location!.split('public/')[1]},`;
+		});
+
 		const newApply = await Application.create({
 			userId: user.id,
 			school: user.school,
 			title,
-			content
+			content,
+			image
 		});
 
 		res.status(201).json({
@@ -52,7 +60,12 @@ export const getAllApplications = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const applications = await Application.findAll({
 			where: { school: req.user?.school },
-			attributes: { exclude: ['id'] }
+			attributes: { exclude: ['id'] },
+			include: {
+				model: User,
+				as: 'user',
+				attributes: ['id', 'name', 'photo', 'school']
+			}
 		});
 
 		res.status(201).json({
@@ -75,6 +88,15 @@ export const getOneApplication = catchAsync(
 			},
 			attributes: { exclude: ['id'] }
 		});
+
+		if (!application) {
+			return next(new AppError('cannot find app', 400));
+		}
+
+		const image = (application.image as string).split(',');
+
+		image.pop();
+		application.image = image;
 
 		res.status(201).json({
 			status: 'success',

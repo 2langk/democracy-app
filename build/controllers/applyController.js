@@ -22,11 +22,17 @@ exports.createApplication = catchAsync_1.default((req, res, next) => __awaiter(v
     }
     if (!user || !title)
         return next(new AppError_1.default('Error: 잘못된 접근입니다.', 400));
+    let image = '';
+    const upload = req.files;
+    upload.forEach((file) => {
+        image += `${file.location.split('public/')[1]},`;
+    });
     const newApply = yield models_1.Application.create({
         userId: user.id,
         school: user.school,
         title,
-        content
+        content,
+        image
     });
     res.status(201).json({
         status: 'success',
@@ -49,7 +55,12 @@ exports.getAllApplications = catchAsync_1.default((req, res, next) => __awaiter(
     var _a;
     const applications = yield models_1.Application.findAll({
         where: { school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school },
-        attributes: { exclude: ['id'] }
+        attributes: { exclude: ['id'] },
+        include: {
+            model: models_1.User,
+            as: 'user',
+            attributes: ['id', 'name', 'photo', 'school']
+        }
     });
     res.status(201).json({
         status: 'success',
@@ -68,6 +79,12 @@ exports.getOneApplication = catchAsync_1.default((req, res, next) => __awaiter(v
         },
         attributes: { exclude: ['id'] }
     });
+    if (!application) {
+        return next(new AppError_1.default('cannot find app', 400));
+    }
+    const image = application.image.split(',');
+    image.pop();
+    application.image = image;
     res.status(201).json({
         status: 'success',
         application

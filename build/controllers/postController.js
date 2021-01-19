@@ -132,7 +132,7 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
             {
                 model: models_1.Comment,
                 as: 'comment',
-                attributes: ['id', 'content', 'updatedAt'],
+                attributes: ['id', 'content', 'updatedAt', 'userId'],
                 include: [
                     {
                         model: models_1.User,
@@ -142,7 +142,7 @@ exports.getOnePost = catchAsync_1.default((req, res, next) => __awaiter(void 0, 
                     {
                         model: models_1.SubComment,
                         as: 'subComment',
-                        attributes: ['id', 'content', 'updatedAt'],
+                        attributes: ['id', 'content', 'updatedAt', 'userId'],
                         include: [
                             {
                                 model: models_1.User,
