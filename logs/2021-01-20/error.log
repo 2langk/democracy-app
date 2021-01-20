@@ -10,3 +10,21 @@
 2021-01-20 15:37:07 [logs] error: 이미 선출 되었습니다.
 2021-01-20 15:39:13 [logs] error: Error: 투표를 먼저 종료하세요!
 2021-01-20 15:39:36 [logs] error: Error: 투표를 먼저 종료하세요!
+2021-01-20 16:02:55 [logs] error: Error: 입후보 신청 기간이 아닙니다.
+2021-01-20 16:19:40 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:20:31 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:20:50 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:21:12 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:23:36 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:23:53 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:24:04 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:31:18 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:31:20 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:32:53 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:33:36 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:33:50 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:34:50 [logs] error: Unknown column 'User.schoo' in 'where clause'
+2021-01-20 16:38:58 [logs] error: Error: 투표를 먼저 종료하세요!
+2021-01-20 16:55:58 [logs] error: ERROR: Cannot find school!
+2021-01-20 17:23:10 [logs] error: Error: 투표를 먼저 종료하세요!
+2021-01-20 17:23:54 [logs] error: Error: 투표를 먼저 종료하세요!

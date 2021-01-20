@@ -61,11 +61,11 @@ exports.getAllPledges = catchAsync_1.default((req, res, next) => __awaiter(void 
     }
     const pledges = yield models_1.Pledge.findAll({
         where: { school: req.user.school },
-        attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
+        attributes: { exclude: ['image', 'voteCount', 'content'] },
         include: {
             model: models_1.User,
             as: 'candidate',
-            attributes: ['name', 'photo', 'school']
+            attributes: ['name', 'photo', 'school', 'role']
         }
     });
     yield models_1.Redis.setCache(req.user.school, 100, JSON.stringify(pledges));
@@ -196,6 +196,11 @@ exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, v
         where: { school: req.user.school },
         attributes: { exclude: ['voteCount'] }
     });
+    const students = yield models_1.User.findAll({
+        where: {
+            school: req.user.school
+        }
+    });
     if (pledges[0].canVote) {
         return next(new AppError_1.default('Error: 투표를 먼저 종료하세요!', 400));
     }
@@ -206,7 +211,12 @@ exports.voteReset = catchAsync_1.default((req, res, next) => __awaiter(void 0, v
         pledge.voteCount = 0;
         return pledge.save();
     });
+    const studentsPromise = students.map((student) => {
+        student.isVote = false;
+        return student.save();
+    });
     pledges = yield Promise.all(pledgesPromise);
+    yield Promise.all(studentsPromise);
     res.status(200).json({
         status: 'success',
         pledges

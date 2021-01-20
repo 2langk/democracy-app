@@ -52,11 +52,11 @@ export const getAllPledges = catchAsync(
 
 		const pledges = await Pledge.findAll({
 			where: { school: req.user!.school },
-			attributes: { exclude: ['image', 'canVote', 'voteCount', 'content'] },
+			attributes: { exclude: ['image', 'voteCount', 'content'] },
 			include: {
 				model: User,
 				as: 'candidate',
-				attributes: ['name', 'photo', 'school']
+				attributes: ['name', 'photo', 'school', 'role']
 			}
 		});
 
@@ -247,6 +247,12 @@ export const voteReset = catchAsync(
 			attributes: { exclude: ['voteCount'] }
 		});
 
+		const students = await User.findAll({
+			where: {
+				school: req.user!.school
+			}
+		});
+
 		if (pledges[0].canVote) {
 			return next(new AppError('Error: 투표를 먼저 종료하세요!', 400));
 		}
@@ -259,7 +265,13 @@ export const voteReset = catchAsync(
 			return pledge.save();
 		});
 
+		const studentsPromise = students.map((student) => {
+			student.isVote = false;
+			return student.save();
+		});
+
 		pledges = await Promise.all(pledgesPromise);
+		await Promise.all(studentsPromise);
 
 		res.status(200).json({
 			status: 'success',
