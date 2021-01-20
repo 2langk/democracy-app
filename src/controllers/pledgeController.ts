@@ -281,9 +281,13 @@ export const getResult = catchAsync(
 
 		const max = (await Pledge.max('voteCount')) as number;
 
-		const winner = await Pledge.findAll({
+		let winner: Array<any> = await Pledge.findAll({
 			where: { voteCount: max },
 			attributes: ['candidateId']
+		});
+
+		winner = winner.map((a) => {
+			return a.candidateId;
 		});
 
 		res.status(200).json({
@@ -303,6 +307,9 @@ export const electPresident = catchAsync(
 		if (!president || president!.school !== req.user!.school)
 			return next(new AppError('ERROR: Permission denied', 400));
 
+		if (president.role === 'president') {
+			return next(new AppError('이미 선출 되었습니다.', 400));
+		}
 		president.role = 'president';
 
 		await president.save();

@@ -222,9 +222,12 @@ exports.getResult = catchAsync_1.default((req, res, next) => __awaiter(void 0, v
         }
     });
     const max = (yield models_1.Pledge.max('voteCount'));
-    const winner = yield models_1.Pledge.findAll({
+    let winner = yield models_1.Pledge.findAll({
         where: { voteCount: max },
         attributes: ['candidateId']
+    });
+    winner = winner.map((a) => {
+        return a.candidateId;
     });
     res.status(200).json({
         status: 'success',
@@ -237,6 +240,9 @@ exports.electPresident = catchAsync_1.default((req, res, next) => __awaiter(void
     const president = yield models_1.User.findByPk(candidateId);
     if (!president || president.school !== req.user.school)
         return next(new AppError_1.default('ERROR: Permission denied', 400));
+    if (president.role === 'president') {
+        return next(new AppError_1.default('이미 선출 되었습니다.', 400));
+    }
     president.role = 'president';
     yield president.save();
     res.status(200).json({
