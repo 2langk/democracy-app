@@ -9,7 +9,10 @@ export const createPost = catchAsync(
 		const { title, content, category } = req.body;
 		const { school, id } = req.user!;
 
-		if (['edu', 'notice'].includes(category) && req.user!.role !== 'admin')
+		if (
+			['hearing', 'edu', 'notice'].includes(category) &&
+			req.user!.role !== 'admin'
+		)
 			return next(new AppError('Error: Permission Denied', 400));
 
 		const uploads = req.files as {

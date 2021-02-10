@@ -50,7 +50,7 @@ Post.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
-				isIn: [['debate', 'edu', 'notice']]
+				isIn: [['hearing', 'evaluation', 'debate', 'edu', 'notice']]
 			}
 		},
 

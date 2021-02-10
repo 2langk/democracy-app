@@ -1,0 +1,450 @@
+2021-02-10 13:10:06 [logs] error: uncaughtException: Redis connection to redis:6379 failed - getaddrinfo ENOTFOUND redis
+Error: Redis connection to redis:6379 failed - getaddrinfo ENOTFOUND redis
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26)
+2021-02-10 13:10:09 [logs] error: uncaughtException: Redis connection to redis:6379 failed - getaddrinfo ENOTFOUND redis
+Error: Redis connection to redis:6379 failed - getaddrinfo ENOTFOUND redis
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26)
+2021-02-10 13:35:54 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:38:18 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:39:23 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:40:07 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:40:47 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m37[0m:[93m4[0m - [91merror[0m[90m TS2322: [0mType 'string' is not assignable to type 'number'.
+
+[7m37[0m  		ratingAVG += e.rating;
+[7m  [0m [91m 		~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:41:59 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:42:45 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:44:08 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 13:47:24 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m2[0m:[93m16[0m - [91merror[0m[90m TS2305: [0mModule '"../models"' has no exported member 'Evalutation'.
+
+[7m2[0m import { User, Evalutation } from '../models';
+[7m [0m [91m               ~~~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m36[0m:[93m24[0m - [91merror[0m[90m TS7006: [0mParameter 'e' implicitly has an 'any' type.
+
+[7m36[0m  	evaluations.forEach((e) => {
+[7m  [0m [91m 	                     ~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 14:13:19 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m12[0m:[93m9[0m - [91merror[0m[90m TS1215: [0mInvalid use of 'eval'. Modules are automatically in strict mode.
+
+[7m12[0m  	const eval = await Evalutation.findOne({
+[7m  [0m [91m 	      ~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m12[0m:[93m9[0m - [91merror[0m[90m TS1215: [0mInvalid use of 'eval'. Modules are automatically in strict mode.
+
+[7m12[0m  	const eval = await Evalutation.findOne({
+[7m  [0m [91m 	      ~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:04:13 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m41[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'Evalutation'.
+
+[7m41[0m  			case 'Oranges':
+[7m  [0m [91m 			     ~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m44[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'Evalutation'.
+
+[7m44[0m  			case 'Mangoes':
+[7m  [0m [91m 			     ~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m41[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'Evalutation'.
+
+[7m41[0m  			case 'Oranges':
+[7m  [0m [91m 			     ~~~~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m44[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'Evalutation'.
+
+[7m44[0m  			case 'Mangoes':
+[7m  [0m [91m 			     ~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:05:15 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m41[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m41[0m  			case '5':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m44[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m44[0m  			case '4':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m47[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m47[0m  			case '3':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m50[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m50[0m  			case '2':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m53[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m53[0m  			case '1':
+[7m  [0m [91m 			     ~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m41[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m41[0m  			case '5':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m44[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m44[0m  			case '4':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m47[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m47[0m  			case '3':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m50[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m50[0m  			case '2':
+[7m  [0m [91m 			     ~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m53[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'string' is not comparable to type 'number'.
+
+[7m53[0m  			case '1':
+[7m  [0m [91m 			     ~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:11:42 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m46[0m:[93m15[0m - [91merror[0m[90m TS2339: [0mProperty 'toJSON' does not exist on type 'Evalutation[]'.
+
+[7m46[0m  	evaluations.toJSON().forEach((evaluation) => {
+[7m  [0m [91m 	            ~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m46[0m:[93m33[0m - [91merror[0m[90m TS7006: [0mParameter 'evaluation' implicitly has an 'any' type.
+
+[7m46[0m  	evaluations.toJSON().forEach((evaluation) => {
+[7m  [0m [91m 	                              ~~~~~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m46[0m:[93m15[0m - [91merror[0m[90m TS2339: [0mProperty 'toJSON' does not exist on type 'Evalutation[]'.
+
+[7m46[0m  	evaluations.toJSON().forEach((evaluation) => {
+[7m  [0m [91m 	            ~~~~~~[0m
+[96msrc/controllers/evalController.ts[0m:[93m46[0m:[93m33[0m - [91merror[0m[90m TS7006: [0mParameter 'evaluation' implicitly has an 'any' type.
+
+[7m46[0m  	evaluations.toJSON().forEach((evaluation) => {
+[7m  [0m [91m 	                              ~~~~~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:12:54 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m48[0m:[93m32[0m - [91merror[0m[90m TS2339: [0mProperty 'rating' does not exist on type 'object'.
+
+[7m48[0m  		switch (evaluation.toJSON().rating) {
+[7m  [0m [91m 		                            ~~~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m48[0m:[93m32[0m - [91merror[0m[90m TS2339: [0mProperty 'rating' does not exist on type 'object'.
+
+[7m48[0m  		switch (evaluation.toJSON().rating) {
+[7m  [0m [91m 		                            ~~~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:14:49 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m49[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'number' is not comparable to type 'string'.
+
+[7m49[0m  			case 5:
+[7m  [0m [91m 			     ~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m49[0m:[93m10[0m - [91merror[0m[90m TS2678: [0mType 'number' is not comparable to type 'string'.
+
+[7m49[0m  			case 5:
+[7m  [0m [91m 			     ~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+2021-02-10 15:20:08 [logs] error: uncaughtException: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m70[0m:[93m14[0m - [91merror[0m[90m TS2363: [0mThe right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+[7m70[0m  	rates.A /= res.status(201).json({
+[7m  [0m [91m 	           ~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m71[0m  		status: 'success',
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~[0m
+[7m72[0m  		rates
+[7m  [0m [91m~~~~~~~~[0m
+[7m73[0m  	});
+[7m  [0m [91m~~~~[0m
+
+TSError: ⨯ Unable to compile TypeScript:
+[96msrc/controllers/evalController.ts[0m:[93m70[0m:[93m14[0m - [91merror[0m[90m TS2363: [0mThe right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+[7m70[0m  	rates.A /= res.status(201).json({
+[7m  [0m [91m 	           ~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m71[0m  		status: 'success',
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~[0m
+[7m72[0m  		rates
+[7m  [0m [91m~~~~~~~~[0m
+[7m73[0m  	});
+[7m  [0m [91m~~~~[0m
+
+    at createTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:513:12)
+    at reportTSError (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:517:19)
+    at getOutput (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:752:36)
+    at Object.compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:968:32)
+    at Module.m._compile (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1056:42)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\leelk\OneDrive\바탕 화면\TypeScript\ts-democracy\node_modules\ts-node\src\index.ts:1059:12)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)

@@ -7,13 +7,8 @@ const router = Router();
 router.use(protect);
 
 router
-	.route('/')
-	.get(evalController.getEvaluationAVG)
-	.post(evalController.createEvaluation);
-
-router
 	.route('/:id')
-	.get(evalController.getMyEvaluation)
-	.patch(evalController.updateMyEvaluation);
+	.get(evalController.getEvaluation)
+	.post(evalController.createEvaluation);
 
 export default router;

@@ -1,5 +1,0 @@
-2021-01-15 23:05:25 [logs] error: jwt malformed
-2021-01-15 23:05:43 [logs] error: ERROR: Cannot find user or not auth 
-2021-01-15 23:24:23 [logs] error: WHERE parameter "undefined" has invalid "undefined" value
-2021-01-15 23:50:36 [logs] error: Invalid value { title: '%스트1%' }
-2021-01-15 23:52:45 [logs] error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ILIKE '%스트1%' ORDER BY `Post`.`createdAt` DESC LIMIT 0, 10) AS `Post` LEFT O' at line 1

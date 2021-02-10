@@ -23,6 +23,12 @@ import {
 
 dotenv.config({ path: './config.env' });
 
+process.on('uncaughtException', (err) => {
+	console.log('UNCAUGHT EXCEPTION!  Shutting down...');
+	console.log(err.name, err.message);
+	process.exit(1);
+});
+
 const app = express();
 
 app.enable('trust proxy');
@@ -76,4 +82,14 @@ redisClient.on('connect', () => console.log('Redis Connected!'));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
+const server = app.listen(PORT, () =>
+	console.log(`Server is running on ${PORT}`)
+);
+
+process.on('unhandledRejection', (err) => {
+	console.log('UNHANDLED REJECTION! Shutting down...');
+	console.log(err);
+	server.close(() => {
+		process.exit(1);
+	});
+});

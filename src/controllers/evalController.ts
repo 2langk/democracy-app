@@ -9,16 +9,19 @@ export const createEvaluation = catchAsync(
 
 		if (!user) return next(new AppError('protect', 400));
 
-		const president = await User.findOne({ where: { school: user.school } });
+		const evaluation = await Evalutation.findOne({
+			where: { postId: req.params.id, userId: user.id }
+		});
+
+		if (evaluation) return next(new AppError('protect', 400));
 
 		const newEval = await Evalutation.create({
-			presidentId: president!.id,
+			postId: req.params.id,
 			userId: user.id,
 			school: user.school,
 			rating: req.body.rating
 		});
 
-		newEval.id = undefined;
 		res.status(201).json({
 			status: 'success',
 			newEval
@@ -26,22 +29,52 @@ export const createEvaluation = catchAsync(
 	}
 );
 
-export const getEvaluationAVG = catchAsync(
+export const getEvaluation = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
 		const evaluations = await Evalutation.findAll({
-			where: { school: req.user!.school }
+			where: { postId: req.params.id }
 		});
 
-		let ratingAVG = 0;
-		evaluations.forEach((e) => {
-			ratingAVG += e.rating;
+		const rates = {
+			A: 0,
+			B: 0,
+			C: 0,
+			D: 0,
+			E: 0
+		};
+
+		const total = evaluations.length;
+		evaluations.forEach((evaluation) => {
+			switch (
+				((evaluation.toJSON() as Evalutation).rating as unknown) as number
+			) {
+				case 5:
+					rates.A += 1;
+					break;
+				case 4:
+					rates.B += 1;
+					break;
+				case 3:
+					rates.C += 1;
+					break;
+				case 2:
+					rates.D += 1;
+					break;
+				case 1:
+					rates.E += 1;
+					break;
+				default:
+			}
 		});
 
-		ratingAVG /= evaluations.length;
-
+		rates.A = (rates.A / total) * 100;
+		rates.B = (rates.B / total) * 100;
+		rates.C = (rates.C / total) * 100;
+		rates.D = (rates.D / total) * 100;
+		rates.E = (rates.E / total) * 100;
 		res.status(201).json({
 			status: 'success',
-			ratingAVG
+			rates
 		});
 	}
 );

@@ -5,13 +5,13 @@ import { dbType } from './index';
 class Evalutation extends Model {
 	public id?: number;
 
-	public presidentId!: string;
+	public postId!: string;
 
 	public userId!: string;
 
 	public school!: string;
 
-	public rating!: number;
+	public rating!: string;
 
 	public readonly createdAt!: Date;
 
@@ -22,8 +22,12 @@ Evalutation.init(
 	{
 		userId: {
 			type: DataTypes.UUID,
-			allowNull: false,
-			unique: true
+			allowNull: false
+		},
+
+		postId: {
+			type: DataTypes.UUID,
+			allowNull: false
 		},
 
 		school: {
@@ -38,8 +42,7 @@ Evalutation.init(
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			validate: {
-				max: 10,
-				min: 1
+				isIn: [['1', '2', '3', '4', '5']]
 			}
 		}
 	},
@@ -52,9 +55,6 @@ Evalutation.init(
 	}
 );
 
-export const associate = (db: dbType): void => {
-	// eslint-disable-next-line prettier/prettier
-  Evalutation.belongsTo(db.User, { foreignKey: 'presidentId', as: 'president' })
-};
+export const associate = (db: dbType): void => {};
 
 export default Evalutation;
