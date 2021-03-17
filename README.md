@@ -2,11 +2,10 @@
 
 ### Typescript + Express + MySQL(AWS RDS) 기반의 API 서버입니다. 
 
-### 테스트 서버 = AWS EC2 + github action [서버 링크](https://dcrasee.tk/).
+### 테스트 서버 = AWS EC2 + github action 
 
 ### API 문서링크 [Postman 문서링크](https://documenter.getpostman.com/view/12302946/TVt1A5V4).
 
-### 프론트 = [프론트 리포](https://github.com/2langk/Capstone)
 ------------------------
 #### 한줄 소개 = 고등학교용 에브리타임(학생회장 선거 플랫폼)  
 
@@ -77,13 +76,4 @@
   - logger - 날짜별로 3가지의 로그(error, info, exception) 기록.     
   - multerConfig - 파일 업로드를 위한 multer의 미들웨어 정리.   
   
-  ##### 배포 계획 = aws ec2 우분투 서버. auto scaling 이용.   
-  - 프론트    
-   = nginx(80, 443) + docker container(express, ejs)    
-  - 백엔드    
-   = nginx(80, 443) + docker container(express)    
-   
-   현재(개발 중)는 1개의 인스턴스에 두 개의 서버를 돌리는 중.  
-   
-   공청회, 이행도 평가 추가 예정.  
-   
+
